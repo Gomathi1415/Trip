@@ -7,11 +7,13 @@ import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.Toast
 import com.example.trip.fragments.UserPreferenceSelectionFragment
 import com.example.trip.models.ListOfTrendingPlaces
 import com.example.trip.models.SpotDetails
+
 
 
 
@@ -26,10 +28,16 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.display_list_of_trip_detail_activity)
         spotDetails = SpotDetails()
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()!!.setDisplayShowHomeEnabled(true)
         userPreferenceSelectionFragment = UserPreferenceSelectionFragment()
-        var intent : Intent = intent
+        val intent : Intent = intent
         cityName = intent.getStringExtra("cityName")
         type = intent.getStringExtra("type")
+        getSupportActionBar()!!.title = cityName
         spotDetails.cityName = cityName
         spotDetails.type = type
         var flag = 0
@@ -48,17 +56,21 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
 
     private fun setFragment(fragment: Fragment): Boolean {
 
-        var fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.listfragmentScreen, fragment).commit()
         return true
     }
 
     override fun openMapListener() {
-        var intent = Intent(this, MapActivity::class.java)
+        val intent = Intent(this, MapActivity::class.java)
         intent.putExtra("cityName",cityName)
         intent.putExtra("type",type)
         startActivity(intent)
 
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }
