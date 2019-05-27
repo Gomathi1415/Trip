@@ -30,9 +30,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
         spotDetails = SpotDetails()
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
-        getSupportActionBar()!!.setDisplayShowHomeEnabled(true)
         userPreferenceSelectionFragment = UserPreferenceSelectionFragment()
         val intent : Intent = intent
         cityName = intent.getStringExtra("cityName")
