@@ -9,6 +9,7 @@
         card_view:cardCornerRadius="30dp"
         android:elevation="1dp"
         android:background="#ECECEC"
+        android:foreground="?attr/selectableItemBackground"
         app:ignore="NamespaceTypo"
 >
 

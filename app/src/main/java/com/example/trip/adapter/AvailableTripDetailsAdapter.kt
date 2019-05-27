@@ -61,6 +61,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
 
         init {
             itemView.setOnClickListener {
+                itemView.defaultFocusHighlightEnabled=true
                 listener.onTrendingPlaceViewClicked(currPosition.toString())
             }
         }
