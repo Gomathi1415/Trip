@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+android:orientation="vertical">
+
+    <LinearLayout
+            android:id="@+id/rlHeaderMain"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:padding="5dp">
+        <TextView android:layout_width="wrap_content"
+                android:text="Bangalore"
+                android:textSize="20sp"
+                android:textColor="#FFFFFF"
+                android:id="@+id/cityName"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/avalilableCityRecycleView"
+            android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
