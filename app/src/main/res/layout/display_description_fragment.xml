@@ -1,39 +1,40 @@
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="55dp"
+        android:padding="8dp"
         android:layout_width="match_parent">
     <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:padding="5dp"
             android:orientation="vertical"
     >
-        <ImageView android:layout_width="match_parent"
-                   android:layout_height="300dp"
-                   android:id="@+id/displayTypeImage"
-
-                   android:adjustViewBounds="false" android:cropToPadding="false"/>
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/nameOfTheTrip"
                   android:text="Title"
                   android:layout_height="wrap_content"
                   android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                  android:fontFamily="casual"
-                  android:typeface="serif"
                   android:textColor="#0D0D0D"
                   android:textStyle="bold"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/price"
-                  android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                  android:layout_height="wrap_content"/>
+
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="300dp"
+                   android:elevation="10dp"
+                   android:scaleType="centerCrop"
+                   android:adjustViewBounds="true"
+                   android:id="@+id/displayTypeImage"
+                   />
+
+
 
         <TextView android:layout_width="wrap_content"
                   android:layout_margin="5dp"
                   android:text="ABOUT"
                   android:layout_height="wrap_content"
                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                  android:fontFamily="casual"
                   android:textStyle="bold"
                   android:textColor="#101010"/>
 
@@ -59,9 +60,12 @@
         />
 </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent"
                       android:orientation="horizontal"
-                      android:layout_margin="10dp"
-                      android:padding="5dp"
+                      android:layout_marginTop="10dp"
+
                       android:layout_height="wrap_content">
 
             <ImageView android:layout_width="wrap_content"
@@ -76,7 +80,34 @@
                       android:layout_height="wrap_content"/>
 
         </LinearLayout>
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
 
+            android:layout_height="wrap_content">
+                <ImageView android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                           android:id="@+id/phoneIcon"
+                android:layout_height="wrap_content"/>
+                <TextView android:layout_width="wrap_content"
+                          android:id="@+id/phoneNumber"
+                          android:layout_margin="10dp"
+                          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            </LinearLayout>
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/price"
 
-    </LinearLayout>
+                  android:textColor="#0B0B0B"
+                  android:layout_marginLeft="40dp"
+                  android:layout_marginBottom="10dp"
+                  android:layout_marginRight="10dp"
+                  android:padding="5dp"
+                  android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                  android:layout_height="wrap_content"/>
+
+</LinearLayout>
+
 </ScrollView>

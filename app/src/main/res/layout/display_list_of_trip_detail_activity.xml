@@ -30,7 +30,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
             android:elevation="12dp"
-            android:backgroundTint="#BCD428"
+            android:backgroundTint="@color/colorPrimary"
             app:srcCompat="@drawable/map_icon"
     />
 </android.support.design.widget.CoordinatorLayout>

@@ -38,13 +38,18 @@ return mView
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         var place = TripDetails.Supplier.tripDetails[position]
-            displayTypeImage.setImageResource(R.drawable.hotel)
+            displayTypeImage.setImageResource(place.image)
         nameOfTheTrip.setText(place.tripName)
         finalDecription.setText(place.description)
         finalAddress.setText(place.address)
           if(place.type=="Hotel") {
-              price.setText("Price for per night -  ${place.price}/-")
+              price.setText("Price per night -  ${place.price}/-")
           }
+        if(place.phone_no!="")
+        {
+            phoneIcon.setImageResource(R.drawable.phone)
+            phoneNumber.setText(place.phone_no)
+        }
         tripName=place.tripName
         lat = place.latitude
         long = place.longitude
