@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.trip.MapViewAdapterListener
 import com.example.trip.R
 import com.example.trip.RecyclerAdapterListener
@@ -23,10 +22,12 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
     private lateinit var rootView: View
     lateinit var spotDetails: SpotDetails
     var position :Int =0
+
     lateinit var mapViewAdapterListener: MapViewAdapterListener
     lateinit var availableCityRecyclerView: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
     lateinit var mapButton : FloatingActionButton
+    lateinit var recyclerViewAdapterListener: RecyclerAdapterListener
     private lateinit var recyclerViewAdapter: AvailableTripDetailsAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -58,8 +59,9 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
     }
 
     override fun onTrendingPlaceViewClicked(position: String) {
-        Toast.makeText(context,position,Toast.LENGTH_SHORT).show()
-              this.position = position.toInt()
+
+        recyclerViewAdapterListener = activity as RecyclerAdapterListener
+                recyclerViewAdapterListener.onTrendingPlaceViewClicked(position)
 
     }
 

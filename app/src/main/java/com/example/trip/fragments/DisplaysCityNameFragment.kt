@@ -15,7 +15,6 @@ import com.example.trip.RecyclerAdapterListener
 import com.example.trip.adapter.CityListAdapter
 import com.example.trip.models.*
 import kotlinx.android.synthetic.main.display_city_name_fragment.*
-import kotlinx.android.synthetic.main.displays_city_name_activity.*
 
 class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
 

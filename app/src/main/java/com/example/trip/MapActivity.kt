@@ -3,22 +3,13 @@ package com.example.trip
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import com.example.trip.models.TripDetails
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -30,8 +21,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
-import java.io.IOException
-import java.util.ArrayList
 
 
 class MapActivity : AppCompatActivity() ,OnMapReadyCallback{
@@ -46,6 +35,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback{
     private val LOCATION_PERMISSION_REQUEST_CODE = 1234
     lateinit var cityName:String
     lateinit var type : String
+
     lateinit var fusedLocationProviderClient : FusedLocationProviderClient
 
 
@@ -73,6 +63,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback{
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
 
         getLocationPermission()
         mGps= findViewById(R.id.ic_gps) as ImageView
@@ -119,10 +110,9 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback{
                             currLat=currentLocation.latitude
                             currLong=currentLocation.longitude
                             moveCamera(LatLng(currentLocation.latitude,currentLocation.longitude),15f,"My Location")
+
                             geoLocate()
 
-                        } else
-                        {
                         }
                     }
 

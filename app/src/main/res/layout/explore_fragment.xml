@@ -24,18 +24,18 @@
             <TextView android:layout_width="wrap_content"
                       android:text="YOURS TO EXPLORE"
                       android:textSize="30sp"
-                      android:layout_margin="10dp"
+                      android:layout_margin="5dp"
                       android:textStyle="bold"
-                      android:textColor="#FFFFFF"
-                      android:layout_height="wrap_content"/>
+                      android:textColor="#0B0A1C"
+                      android:layout_height="wrap_content" android:fontFamily="cursive"/>
             <TextView android:layout_width="wrap_content"
-                      android:textColor="#FFFFFF"
-                      android:textSize="20sp"
+                      android:textColor="#0B0B0B"
+                      android:textSize="25sp"
                       android:layout_marginRight="10dp"
                       android:layout_marginLeft="10dp"
                       android:layout_marginBottom="10dp"
                       android:text="Discover amazing things-to-do"
-                      android:layout_height="wrap_content"/>
+                      android:layout_height="wrap_content" android:fontFamily="cursive"/>
         </LinearLayout>
         <GridView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -76,6 +76,8 @@
 
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
+
+
 
     </LinearLayout>
 </ScrollView>

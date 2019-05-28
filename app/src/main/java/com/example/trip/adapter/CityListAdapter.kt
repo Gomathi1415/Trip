@@ -32,7 +32,6 @@ class CityListAdapter(val context: Context, val trendingplaces : MutableList<Lis
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         lateinit var currCity : String
 
-        var currPosition : Int =0
         init {
             itemView.setOnClickListener {
                 listener.onTrendingPlaceViewClicked(currCity)
@@ -42,7 +41,7 @@ class CityListAdapter(val context: Context, val trendingplaces : MutableList<Lis
         fun setData(place: ListOfTrendingPlaces, pos : Int) {
             itemView.city_list_text_view.text = place.title
             this.currCity = place.title
-            this.currPosition = pos
+
 
         }
     }

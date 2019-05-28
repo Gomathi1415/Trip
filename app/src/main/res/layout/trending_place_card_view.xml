@@ -7,7 +7,7 @@
         xmlns:app="http://schemas.android.com/tools"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="30dp"
-        android:elevation="1dp"
+        android:elevation="8dp"
         android:background="#ECECEC"
         android:foreground="?attr/selectableItemBackground"
         app:ignore="NamespaceTypo"
@@ -16,7 +16,6 @@
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
             android:layout_gravity="bottom"
             android:gravity="bottom"
             android:orientation="vertical"

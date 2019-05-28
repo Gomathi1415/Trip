@@ -6,14 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.ActionBar
-import android.view.Window
-import android.widget.Toast
 import com.example.trip.fragments.DisplaysCityNameFragment
-import com.example.trip.fragments.UserPreferenceSelectionFragment
-import com.example.trip.models.ListOfTrendingPlaces
-import com.example.trip.models.SpotDetails
-import kotlinx.android.synthetic.main.displays_city_name_activity.*
 
 
 class DisplayCityNameActivity : AppCompatActivity(),Communicator{
