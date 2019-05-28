@@ -30,7 +30,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        cityList = ListOfTrendingPlaces.Supplier.trendingPlaces
+        cityList = ListOfTrendingPlaces.Supplier.availablecities
         search(this.context!!)
         layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL

@@ -19,4 +19,5 @@ data class ImagesOfTrendingPlaces(var title: Int)
             R.drawable.thekkady)
     }
 
+
 }
