@@ -1,12 +1,15 @@
 package com.example.trip
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.example.trip.fragments.DisplayDescriptionFragment
 import com.example.trip.fragments.UserPreferenceSelectionFragment
 import com.example.trip.models.ListOfTrendingPlaces
@@ -27,6 +30,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.display_list_of_trip_detail_activity)
+
         spotDetails = SpotDetails()
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -70,6 +74,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
         onBackPressed()
         return true
     }
+
     override fun onTrendingPlaceViewClicked(position: String) {
         displayDescriptionFragment.positionNumber(position)
         fragmentTransaction = supportFragmentManager.beginTransaction()

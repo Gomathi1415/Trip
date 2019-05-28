@@ -1,7 +1,9 @@
 package com.example.trip.fragments
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
+import kotlinx.android.synthetic.main.display_list_of_trip_detail_activity.*
 
 
 class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
@@ -32,6 +35,7 @@ class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
 return mView
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         var place = TripDetails.Supplier.tripDetails[position]
             displayTypeImage.setImageResource(R.drawable.hotel)
@@ -44,6 +48,8 @@ return mView
         tripName=place.tripName
         lat = place.latitude
         long = place.longitude
+        var fab: FloatingActionButton =activity!!.findViewById(R.id.mapButton) as FloatingActionButton
+        fab.visibility= View.INVISIBLE
         super.onActivityCreated(savedInstanceState)
     }
 

@@ -1,5 +1,6 @@
 package com.example.trip.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -29,10 +30,13 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
     lateinit var mapButton : FloatingActionButton
     lateinit var recyclerViewAdapterListener: RecyclerAdapterListener
     private lateinit var recyclerViewAdapter: AvailableTripDetailsAdapter
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         rootView = inflater.inflate(R.layout.user_preference_selection_fragment, container, false)
         availableCityRecyclerView = rootView.findViewById(R.id.avalilableCityRecycleView)
+        var fab: FloatingActionButton =activity!!.findViewById(R.id.mapButton) as FloatingActionButton
+        fab.visibility= View.VISIBLE
         return rootView
     }
 
