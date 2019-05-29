@@ -51,7 +51,7 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
         mapButton = activity!!.findViewById(R.id.mapButton) as FloatingActionButton
         mapButton.setOnClickListener {
             mapViewAdapterListener = activity as MapViewAdapterListener
-            mapViewAdapterListener.openMapListener()
+            mapViewAdapterListener.openMapListener(" ")
         }
             super.onActivityCreated(savedInstanceState)
         }
@@ -64,7 +64,7 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
 
     override fun onTrendingPlaceViewClicked(position: String) {
 
-        recyclerViewAdapterListener = activity as RecyclerAdapterListener
+                recyclerViewAdapterListener = activity as RecyclerAdapterListener
                 recyclerViewAdapterListener.onTrendingPlaceViewClicked(position)
 
     }

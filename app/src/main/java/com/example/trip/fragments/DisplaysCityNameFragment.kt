@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
-import com.example.trip.Communicator
-import com.example.trip.R
-import com.example.trip.RecyclerAdapterListener
+import com.example.trip.*
 import com.example.trip.adapter.CityListAdapter
 import com.example.trip.models.*
 import kotlinx.android.synthetic.main.display_city_name_fragment.*
@@ -20,10 +18,12 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
 
 
     lateinit var communicator: Communicator
+    lateinit var mapViewAdapterListener: MapViewAdapterListener
     private lateinit var recyclerViewAdapter: CityListAdapter
     private lateinit var layoutManager: LinearLayoutManager
     lateinit var cityList : MutableList<ListOfTrendingPlaces>
      lateinit var type :String
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.display_city_name_fragment,container,false)
@@ -31,6 +31,18 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         cityList = ListOfTrendingPlaces.Supplier.availablecities
+        if(type!="Explore Button")
+        {
+            searchIcon.setImageResource(R.drawable.near_me)
+            kmlimitsearch.setText("Find nearby places")
+            kmlimitsearch.setOnClickListener {
+
+                mapViewAdapterListener = activity as MapViewAdapterListener
+                mapViewAdapterListener.openMapListener(type)
+            }
+
+
+        }
         search(this.context!!)
         layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -38,6 +50,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
         recyclerViewAdapter = CityListAdapter(this.context!!,ListOfTrendingPlaces.Supplier.recentSearches,this)
         cityNamesRecyclerView.adapter = recyclerViewAdapter
         super.onActivityCreated(savedInstanceState)
+
 
     }
 

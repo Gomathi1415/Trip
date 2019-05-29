@@ -6,10 +6,17 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.widget.Toast
 import com.example.trip.fragments.DisplaysCityNameFragment
 
 
-class DisplayCityNameActivity : AppCompatActivity(),Communicator{
+class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterListener{
+    override fun openMapListener(string: String) {
+        val intent :Intent =Intent(this, MapActivity::class.java)
+        intent.putExtra("nearByType",string)
+
+        startActivity(intent)
+    }
 
 
     lateinit var type : String

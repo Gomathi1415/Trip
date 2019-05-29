@@ -22,6 +22,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
 
     lateinit var cityName: String
     lateinit var type: String
+    var hasIndex : Boolean = false
     lateinit var spotDetails: SpotDetails
     lateinit var fragmentTransaction: FragmentTransaction
     lateinit var displayDescriptionFragment: DisplayDescriptionFragment
@@ -30,31 +31,40 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.display_list_of_trip_detail_activity)
-
-        spotDetails = SpotDetails()
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
-        userPreferenceSelectionFragment = UserPreferenceSelectionFragment()
         displayDescriptionFragment = DisplayDescriptionFragment()
-        val intent : Intent = intent
-        cityName = intent.getStringExtra("cityName")
-        type = intent.getStringExtra("type")
-        getSupportActionBar()!!.title = cityName
-        spotDetails.cityName = cityName
-        spotDetails.type = type
-        var flag = 0
-        for (city in ListOfTrendingPlaces.Supplier.recentSearches) {
-            if (city.title == cityName) {
-                flag = 1
-            }
+        if (intent.hasExtra("position")) {
+            cityName = " "
+         hasIndex = true
+            onTrendingPlaceViewClicked(intent.getStringExtra("position"))
         }
-        if (flag == 0) {
-            ListOfTrendingPlaces.Supplier.recentSearches.add(0, ListOfTrendingPlaces(cityName))
-        }
-        userPreferenceSelectionFragment.changeData(spotDetails)
-        setFragment(userPreferenceSelectionFragment)
+        else
+        {
+            spotDetails = SpotDetails()
+            val toolbar = findViewById(R.id.toolbar) as Toolbar
+            setSupportActionBar(toolbar)
+            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+            userPreferenceSelectionFragment = UserPreferenceSelectionFragment()
 
+            val intent: Intent = intent
+            cityName = intent.getStringExtra("cityName")
+            type = intent.getStringExtra("type")
+
+            getSupportActionBar()!!.title = cityName
+            spotDetails.cityName = cityName
+            spotDetails.type = type
+            var flag = 0
+            for (city in ListOfTrendingPlaces.Supplier.recentSearches) {
+                if (city.title == cityName) {
+                    flag = 1
+                }
+            }
+            if (flag == 0) {
+                ListOfTrendingPlaces.Supplier.recentSearches.add(0, ListOfTrendingPlaces(cityName))
+            }
+            userPreferenceSelectionFragment.changeData(spotDetails)
+            setFragment(userPreferenceSelectionFragment)
+
+        }
     }
 
     private fun setFragment(fragment: Fragment): Boolean {
@@ -63,7 +73,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
         return true
     }
 
-    override fun openMapListener() {
+    override fun openMapListener(string: String) {
         val intent = Intent(this, MapActivity::class.java)
         intent.putExtra("cityName",cityName)
         intent.putExtra("type",type)
@@ -77,9 +87,18 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
 
     override fun onTrendingPlaceViewClicked(position: String) {
         displayDescriptionFragment.positionNumber(position)
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.listfragmentScreen, displayDescriptionFragment).addToBackStack(null).commit()
 
+        fragmentTransaction = supportFragmentManager.beginTransaction()
+
+        if (hasIndex) {
+            fragmentTransaction.replace(R.id.listfragmentScreen, displayDescriptionFragment)
+                .commit()
+        } else {
+            fragmentTransaction.replace(R.id.listfragmentScreen, displayDescriptionFragment).addToBackStack(null)
+                .commit()
+
+
+        }
     }
 
 

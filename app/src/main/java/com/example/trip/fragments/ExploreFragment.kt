@@ -60,7 +60,7 @@ class ExploreFragment  : Fragment(),RecyclerAdapterListener{
             grid!!.setAdapter(adapter)
            grid!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             communicator = activity as Communicator
-            var tripType : String = userPreference[+position] //changed
+            var tripType : String = userPreference[position] //changed
                communicator.response(tripType) }
 
             super.onActivityCreated(savedInstanceState)
