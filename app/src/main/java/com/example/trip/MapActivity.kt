@@ -3,11 +3,12 @@ package com.example.trip
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.ImageView
@@ -20,10 +21,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.tasks.OnCompleteListener
-import android.widget.Toast
-import com.example.trip.fragments.DisplayDescriptionFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 
 
@@ -153,6 +151,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback{
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom))
         if(!title.equals("My Location"))
         {
+
             var options : MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString())
             mMap.addMarker(options)
         }

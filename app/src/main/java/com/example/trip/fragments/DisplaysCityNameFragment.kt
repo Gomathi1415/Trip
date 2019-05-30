@@ -34,7 +34,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
         if(type!="Explore Button")
         {
             searchIcon.setImageResource(R.drawable.near_me)
-            kmlimitsearch.setText("Find nearby places")
+            kmlimitsearch.setText("Find nearby $type")
             kmlimitsearch.setOnClickListener {
 
                 mapViewAdapterListener = activity as MapViewAdapterListener
@@ -43,15 +43,17 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
 
 
         }
-        search(this.context!!)
-        layoutManager = LinearLayoutManager(activity)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        cityNamesRecyclerView.layoutManager = layoutManager
-        recyclerViewAdapter = CityListAdapter(this.context!!,ListOfTrendingPlaces.Supplier.recentSearches,this)
-        cityNamesRecyclerView.adapter = recyclerViewAdapter
+
+            search(this.context!!)
+            layoutManager = LinearLayoutManager(activity)
+            layoutManager.orientation = LinearLayoutManager.VERTICAL
+            cityNamesRecyclerView.layoutManager = layoutManager
+            recyclerViewAdapter = CityListAdapter(this.context!!, ListOfTrendingPlaces.Supplier.recentSearches, this)
+            cityNamesRecyclerView.adapter = recyclerViewAdapter
+
+
+
         super.onActivityCreated(savedInstanceState)
-
-
     }
 
     fun search(context : Context)
