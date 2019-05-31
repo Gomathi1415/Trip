@@ -1,7 +1,13 @@
 package com.example.trip.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
+import android.provider.Settings
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -46,16 +52,19 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
 
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         availableCityRecyclerView.layoutManager = layoutManager
-        recyclerViewAdapter = AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails, this)
+        recyclerViewAdapter =
+            AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails, this)
         availableCityRecyclerView.adapter = recyclerViewAdapter
         mapButton = activity!!.findViewById(R.id.mapButton) as FloatingActionButton
         mapButton.setOnClickListener {
-            mapViewAdapterListener = activity as MapViewAdapterListener
-            mapViewAdapterListener.openMapListener(" ")
-        }
-            super.onActivityCreated(savedInstanceState)
-        }
 
+                mapViewAdapterListener = activity as MapViewAdapterListener
+                mapViewAdapterListener.openMapListener(" ")
+            }
+
+
+        super.onActivityCreated(savedInstanceState)
+    }
 
     fun changeData(spotDetails: SpotDetails)
     {
@@ -68,7 +77,5 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
                 recyclerViewAdapterListener.onTrendingPlaceViewClicked(position)
 
     }
-
-
 
 }
