@@ -258,7 +258,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
     fun nearBy() {
         var latitude: Double = Math.toRadians(currLat)
         var longitude = Math.toRadians(currLong)
-        var distance: Double = 0.0
+        var distance: Double
         var index = 0
 
         for (latlong in TripDetails.Supplier.tripDetails) {
