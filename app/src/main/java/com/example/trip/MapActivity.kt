@@ -261,6 +261,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
         var distance: Double
         var index = 0
 
+
         for (latlong in TripDetails.Supplier.tripDetails) {
 
             var radius: Double = 6371.0
@@ -277,7 +278,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
                         ), 2.0
                     )
                 )
-            ));
+            ))
 
             if (distance <= 100 && type == latlong.type) {
                 moveCamera(
@@ -290,6 +291,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
             }
             index++
         }
+
 
     }
 

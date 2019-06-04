@@ -19,6 +19,7 @@ import com.example.trip.MapViewAdapterListener
 import com.example.trip.R
 import com.example.trip.RecyclerAdapterListener
 import com.example.trip.adapter.AvailableTripDetailsAdapter
+import com.example.trip.adapter.TabAdapter
 import com.example.trip.models.SpotDetails
 import com.example.trip.models.TripDetails
 import kotlinx.android.synthetic.main.user_preference_selection_fragment.*
@@ -40,14 +41,22 @@ class UserPreferenceSelectionFragment :Fragment(), RecyclerAdapterListener
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         rootView = inflater.inflate(R.layout.user_preference_selection_fragment, container, false)
-        availableCityRecyclerView = rootView.findViewById(R.id.avalilableCityRecycleView)
+//        availableCityRecyclerView = rootView.findViewById(R.id.avalilableCityRecycleView)
         var fab: FloatingActionButton =activity!!.findViewById(R.id.mapButton) as FloatingActionButton
         fab.visibility= View.VISIBLE
         return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        cityName.setText(spotDetails.cityName)
+        var tabAdapterObj = TabAdapter(supportFragmentManager)
+
+        tabAdapterObj.addFragment(Fragment1(),"Hotels")
+        tabAdapterObj.addFragment(Fragment2(),"Restaurants")
+        tabAdapterObj.addFragment(Fragment3(),"Things To Do")
+
+        pager.adapter = tabAdapterObj
+        tabLayout.setupWithViewPager(pager)
+
         layoutManager = LinearLayoutManager(context)
 
         layoutManager.orientation = LinearLayoutManager.VERTICAL

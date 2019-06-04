@@ -13,30 +13,31 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/activity_main"
             tools:context=".MainActivity">
+        <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="300dp"
-                      android:background="@drawable/background"
-                      android:orientation="vertical"
-                      android:gravity="bottom"
-                      tools:ignore="MissingConstraints">
+            <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
 
-            <TextView android:layout_width="wrap_content"
-                      android:text="Yours To Explore"
-                      android:textSize="30sp"
-                      android:layout_margin="5dp"
-                      android:textStyle="bold"
-                      android:textColor="#0B0A1C"
-                      android:layout_height="wrap_content" android:fontFamily="cursive"/>
-            <TextView android:layout_width="wrap_content"
-                      android:textColor="#0B0B0B"
-                      android:textSize="25sp"
-                      android:layout_marginRight="10dp"
-                      android:layout_marginLeft="10dp"
-                      android:layout_marginBottom="10dp"
-                      android:text="Discover amazing things-to-do"
-                      android:layout_height="wrap_content" android:fontFamily="cursive"/>
-        </LinearLayout>
+            </android.support.v4.view.ViewPager>
+            <android.support.design.widget.TabLayout
+                    android:id="@+id/indicator"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabBackground="@drawable/indicator"
+                    app:tabGravity="center"
+                    app:tabIndicatorGravity="bottom"
+                    app:tabIndicatorHeight="0dp"/>
+        </RelativeLayout>
+
+
+
         <GridView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="0dp"
@@ -64,7 +65,7 @@
                       android:text="Popular Destinations"
                       android:textSize="20sp"
                       android:layout_margin="10dp"
-                      android:textStyle="italic|bold"
+                      android:textStyle="bold"
                       android:textColor="#1C1C1C"
                       android:layout_height="wrap_content"/>
 

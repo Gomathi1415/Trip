@@ -16,7 +16,10 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
-import kotlinx.android.synthetic.main.display_list_of_trip_detail_activity.*
+import android.content.Intent
+import android.net.Uri
+
+
 
 
 class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
@@ -45,11 +48,22 @@ return mView
           if(place.type=="Hotel") {
               price.setText("Price per night -  ${place.price}/-")
           }
+
         if(place.phone_no!="")
         {
             phoneIcon.setImageResource(R.drawable.phone)
             phoneNumber.setText(place.phone_no)
+            phoneNumber.setOnClickListener {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.phone_no.trim()))
+                startActivity(intent)
+            }
         }
+        finalAddress.setOnClickListener {
+            val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}"))
+            startActivity(intent)
+
+        }
+
         tripName=place.tripName
         lat = place.latitude
         long = place.longitude
@@ -84,12 +98,18 @@ return mView
        googleMap.addMarker(MarkerOptions().position(LatLng(lat.toDouble(),long.toDouble())).title((tripName)))
         var mapPlace : CameraPosition = CameraPosition.builder().target(LatLng(lat.toDouble(),long.toDouble())).zoom(16F).bearing(0F).tilt(45F).build()
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(mapPlace))
+        mGoogleMap.uiSettings.isZoomControlsEnabled = true
+        mGoogleMap.uiSettings.isScrollGesturesEnabled=true
+        mGoogleMap.uiSettings.isZoomGesturesEnabled=true
+
+
 
     }
 
 
 
     }
+
 
 
 

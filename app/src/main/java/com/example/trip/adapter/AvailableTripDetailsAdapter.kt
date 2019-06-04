@@ -11,6 +11,12 @@ import com.example.trip.models.SpotDetails
 import com.example.trip.models.TripDetails
 import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.view.*
 import android.widget.LinearLayout
+import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
+import android.graphics.Bitmap
+
+
+
 
 
 
@@ -67,24 +73,28 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
 
         fun setData(place: TripDetails, pos: Int){
 
-            if(place.type=="Hotel")
-               {
-                   itemView.typeImage.setImageResource(R.drawable.hotel)
-               }
-            else if(place.type=="Things to do")
-               {
-                   itemView.typeImage.setImageResource(R.drawable.things_to_do)
+//            if(place.type=="Hotel")
+//               {
+//                   itemView.typeImage.setImageResource(R.drawable.hotel)
+//               }
+//            else if(place.type=="Things to do")
+//               {
+//                   itemView.typeImage.setImageResource(R.drawable.things_to_do)
+//
+//               }
+//            else
+//               {
+//                    itemView.typeImage.setImageResource(R.drawable.restaurant)
+//               }
 
-               }
-            else
-               {
-                    itemView.typeImage.setImageResource(R.drawable.restaurant)
-               }
-                itemView.name.text = place.tripName
+
+
+            itemView.name.text = place.tripName
                 itemView.address.text = place.address
                 itemView.description.text = place.description
                 this.name = place.tripName
                 this.currPosition = pos
+            itemView.typeImage.setImageResource(place.image)
 
         }
 

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() ,Communicator{
         val intent :Intent =Intent(this, ListOfAvailableTripDetailActivity::class.java)
                 intent.putExtra("cityName",cityName)
                 intent.putExtra("type",type)
-            startActivity(intent)
+                startActivity(intent)
     }
 
     }

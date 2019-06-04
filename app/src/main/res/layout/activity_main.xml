@@ -21,6 +21,8 @@
              android:layout_margin="10dp"
              android:elevation="12dp"
              android:backgroundTint="#FFFFFF"
+             app:borderWidth="0dp"
+
              app:srcCompat="@drawable/search"
              tools:ignore="VectorDrawableCompat"/>
 </android.support.design.widget.CoordinatorLayout>
