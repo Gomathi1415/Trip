@@ -101,7 +101,7 @@ class ExploreFragment  : Fragment(),RecyclerAdapterListener{
                     handler.postDelayed(object : Runnable {
                         override fun run() {
 
-                            if (viewpager.currentItem< images.size-1) {
+                            if (viewpager.currentItem < images.size-1) {
                                 viewpager.setCurrentItem(viewpager.currentItem+1)
                             } else {
                                 viewpager.setCurrentItem(0)

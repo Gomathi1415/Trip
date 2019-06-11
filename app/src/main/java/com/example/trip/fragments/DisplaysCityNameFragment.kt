@@ -62,7 +62,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
         var searchItem :SearchView = activity!!.findViewById(R.id.citySearchBar)
         searchItem.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(cityAvailable)
+                if(!cityAvailable)
                     Toast.makeText(context,"No Suggestion Available",Toast.LENGTH_SHORT).show()
                 return false
             }

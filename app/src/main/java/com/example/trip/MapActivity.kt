@@ -1,12 +1,12 @@
 package com.example.trip
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.location.LocationManager
 
@@ -17,7 +17,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
+import com.example.trip.fragments.AlertFragment
 import com.example.trip.models.TripDetails
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -33,7 +33,7 @@ import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 
 
 
-class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertCommunicator {
+class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.AlertCommunicator {
 
 
 
@@ -115,15 +115,15 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
                     LatLng(latlong.latitude.toDouble(), latlong.longitude.toDouble()),
                     10f,
                     latlong.tripName,
-                    index
+                    index,latlong.type
                 )
-
-            } else if (type == latlong.type && cityName.contains(latlong.city)) {
+            }
+             else if (type == latlong.type && cityName.contains(latlong.city)) {
                 moveCamera(
                     LatLng(latlong.latitude.toDouble(), latlong.longitude.toDouble()),
                     10f,
                     latlong.tripName,
-                    index
+                    index,latlong.type
                 )
 
 
@@ -151,7 +151,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
                                 LatLng(currentLocation.latitude, currentLocation.longitude),
                                 15f,
                                 "My Location",
-                                -1
+                                -1," "
                             )
                             if (isNearBy != true) {
                                 geoLocate()
@@ -164,7 +164,8 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
                                 getDeviceLocation()
                             } else {
                                    var manager = supportFragmentManager
-                                    var dialog : AlertFragment = AlertFragment()
+                                    var dialog : AlertFragment =
+                                        AlertFragment()
 //
                                    dialog.show(manager,"customDialog")
                             }
@@ -177,17 +178,32 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
         }
 
         mGps.setOnClickListener {
-            moveCamera(LatLng(currLat, currLong), 10f, "My Location", -1)
+            moveCamera(LatLng(currLat, currLong), 10f, "My Location", -1," ")
 
         }
     }
 
-    fun moveCamera(latLng: LatLng, zoom: Float, title: String, index: Int) {
+    fun moveCamera(latLng: LatLng, zoom: Float, title: String, index: Int,type:String) {
+        var bitmapdraw : BitmapDrawable
+        if(type=="Hotel") {
+            bitmapdraw = getResources().getDrawable(R.drawable.hotel_pin) as BitmapDrawable
+        }
+        else if(type == "Restaurant")
+        {
+            bitmapdraw = getResources().getDrawable(R.drawable.restaurant_pin) as BitmapDrawable
+
+        }
+        else{
+            bitmapdraw = getResources().getDrawable(R.drawable.trip_pin) as BitmapDrawable
+
+        }
+  var b: Bitmap =bitmapdraw.getBitmap();
+var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
         if (!title.equals("My Location")) {
 
-            var options: MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString())
+            var options: MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString()).icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
             mMap.addMarker(options)
         }
         mMap.setOnInfoWindowClickListener(OnInfoWindowClickListener {
@@ -285,7 +301,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback,AlertFragment.AlertC
                     LatLng(latlong.latitude.toDouble(), latlong.longitude.toDouble()),
                     10f,
                     latlong.tripName,
-                    index
+                    index,latlong.type
                 )
 
             }

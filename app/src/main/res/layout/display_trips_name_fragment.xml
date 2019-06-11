@@ -12,7 +12,7 @@
             android:id="@+id/avalilableTripsRecycleView"
             android:layout_height="match_parent"
             android:elevation="10dp"
-            android:layout_marginTop="55dp"
+            android:foreground="?attr/selectableItemBackground"
             android:background="?attr/selectableItemBackground"
 
     >

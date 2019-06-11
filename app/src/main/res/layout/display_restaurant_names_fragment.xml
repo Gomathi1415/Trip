@@ -12,8 +12,8 @@
             android:id="@+id/avalilableRestaurantsRecycleView"
             android:layout_height="match_parent"
             android:elevation="10dp"
-            android:layout_marginTop="55dp"
             android:background="?attr/selectableItemBackground"
+            android:foreground="?attr/selectableItemBackground"
 
     >
 

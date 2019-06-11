@@ -11,25 +11,16 @@ import com.example.trip.models.SpotDetails
 import com.example.trip.models.TripDetails
 import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.view.*
 import android.widget.LinearLayout
-import android.graphics.BitmapFactory
-import android.media.ThumbnailUtils
-import android.graphics.Bitmap
+import android.widget.Toast
 
 
-
-
-
-
-class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var listener: RecyclerAdapterListener) :
+class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var type : String,var listener: RecyclerAdapterListener) :
         RecyclerView.Adapter<AvailableTripDetailsAdapter.MyViewHolder>() {
 
 
     override fun onBindViewHolder(p0: MyViewHolder, position: Int) {
         val place: TripDetails = tripDetails[position]
-        if (spotDetails.type == "Explore Button" && spotDetails.cityName.contains(place.city)) {
-            p0.setData(place, position)
-        }
-        else if (spotDetails.type == place.type && spotDetails.cityName.contains(place.city))
+         if (type == place.type && spotDetails.cityName.contains(place.city))
         {
             p0.itemView.setVisibility(View.VISIBLE)
 
@@ -45,9 +36,6 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
             p0.itemView.visibility = View.INVISIBLE
             p0.itemView.setLayoutParams(RecyclerView.LayoutParams(0, 0))
         }
-
-
-
 
     }
 
@@ -73,28 +61,21 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
 
         fun setData(place: TripDetails, pos: Int){
 
-//            if(place.type=="Hotel")
-//               {
-//                   itemView.typeImage.setImageResource(R.drawable.hotel)
-//               }
-//            else if(place.type=="Things to do")
-//               {
-//                   itemView.typeImage.setImageResource(R.drawable.things_to_do)
-//
-//               }
-//            else
-//               {
-//                    itemView.typeImage.setImageResource(R.drawable.restaurant)
-//               }
-
-
-
             itemView.name.text = place.tripName
                 itemView.address.text = place.address
                 itemView.description.text = place.description
                 this.name = place.tripName
                 this.currPosition = pos
-            itemView.typeImage.setImageResource(place.image)
+                itemView.typeImage.setImageResource(place.image)
+            itemView.review.text = place.reviews.toString()
+            if(type=="Hotel") {
+                itemView.rupee.maxHeight=24
+                itemView.rupee.maxWidth=24
+                itemView.price.textSize= 20F
+                itemView.rupee.visibility=View.VISIBLE
+                itemView.price.text = place.price
+                itemView.rupee.setImageResource(R.drawable.rupee)
+            }
 
         }
 

@@ -5,9 +5,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 
 import com.example.trip.R
 import com.example.trip.models.TripDetails
@@ -18,8 +15,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
 import android.net.Uri
-
-
+import android.util.Log
+import android.view.*
 
 
 class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
@@ -35,6 +32,8 @@ class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
          mView = inflater.inflate(R.layout.display_description_fragment, container, false)
 
+
+
 return mView
     }
 
@@ -42,9 +41,12 @@ return mView
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         var place = TripDetails.Supplier.tripDetails[position]
             displayTypeImage.setImageResource(place.image)
+        setHasOptionsMenu(true);
         nameOfTheTrip.setText(place.tripName)
         finalDecription.setText(place.description)
         finalAddress.setText(place.address)
+        setHasOptionsMenu(false)
+
           if(place.type=="Hotel") {
               price.setText("Price per night -  ${place.price}/-")
           }
@@ -69,8 +71,18 @@ return mView
         long = place.longitude
         var fab: FloatingActionButton =activity!!.findViewById(R.id.mapButton) as FloatingActionButton
         fab.visibility= View.INVISIBLE
+
+
         super.onActivityCreated(savedInstanceState)
     }
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        menu!!.clear()
+
+        }
+
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

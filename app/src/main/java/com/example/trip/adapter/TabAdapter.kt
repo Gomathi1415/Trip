@@ -2,9 +2,10 @@ package com.example.trip.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.app.FragmentPagerAdapter
 
-class TabAdapter(fragmentManager:FragmentManager): FragmentStatePagerAdapter(fragmentManager) {
+
+class TabAdapter(fragmentManager:FragmentManager): FragmentPagerAdapter(fragmentManager) {
 
     var fragments=mutableListOf<Fragment>()
     var tabTitles= mutableListOf<String>()

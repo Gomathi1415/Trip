@@ -40,7 +40,6 @@ class ViewPagerAdapter(var context: Context, var images: Array<Int>,var mainText
         backSubText = itemView.findViewById(R.id.backgroundSubText) as TextView
         backtext= itemView.findViewById(R.id.backgroundMainText) as TextView
         image = itemView.findViewById(R.id.backImageView) as LinearLayout
-
         image.setBackgroundResource(images[position])
        backtext.setText(mainText[position])
         backSubText.setText(subText[position])
