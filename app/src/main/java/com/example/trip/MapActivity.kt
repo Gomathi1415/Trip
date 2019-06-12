@@ -332,8 +332,6 @@ var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
         {
             startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),1)
 
-
-
         }
         else
         {

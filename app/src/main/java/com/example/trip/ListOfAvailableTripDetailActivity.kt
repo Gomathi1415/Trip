@@ -1,15 +1,14 @@
 package com.example.trip
 
-import android.annotation.SuppressLint
-import android.content.Context
+
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.View
+import android.view.MenuItem
+import android.widget.Toast
 import com.example.trip.fragments.DisplayDescriptionFragment
 import com.example.trip.fragments.UserPreferenceSelectionFragment
 import com.example.trip.models.ListOfTrendingPlaces
@@ -99,6 +98,13 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
 
 
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> onBackPressed()
+        }
+        return false
     }
 
 

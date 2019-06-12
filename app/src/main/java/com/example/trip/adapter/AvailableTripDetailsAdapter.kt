@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import com.example.trip.R
 import com.example.trip.RecyclerAdapterListener
 import com.example.trip.models.SpotDetails
@@ -14,16 +16,22 @@ import android.widget.LinearLayout
 import android.widget.Toast
 
 
-class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var type : String,var listener: RecyclerAdapterListener) :
+
+
+class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var type : String,var listener: RecyclerAdapterListener,var price : String) :
         RecyclerView.Adapter<AvailableTripDetailsAdapter.MyViewHolder>() {
+
+    var isTripAvailable = false
+
 
 
     override fun onBindViewHolder(p0: MyViewHolder, position: Int) {
         val place: TripDetails = tripDetails[position]
-         if (type == place.type && spotDetails.cityName.contains(place.city))
+         if (type == place.type && spotDetails.cityName.contains(place.city) && (price=="0" || (price=="1" && place.price.toDouble()<10000.toDouble()) || (price=="2" && place.price.toDouble()>10000.toDouble() && place.price.toDouble()<15000.toDouble()) || (price=="3" && place.price.toDouble()>15000.toDouble() && place.price.toDouble()<20000.toDouble())|| (price=="4" && place.price.toDouble()>20000.toDouble() && place.price.toDouble()<30000.toDouble()) || (price=="5" && place.price.toDouble()>30000.toDouble()) ))
         {
-            p0.itemView.setVisibility(View.VISIBLE)
 
+            p0.itemView.setVisibility(View.VISIBLE)
+            isTripAvailable = true
             val linearLayout = LinearLayout(context)
             linearLayout.orientation = LinearLayout.VERTICAL
             val layoutParams = LinearLayout.LayoutParams(
@@ -35,6 +43,10 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
         else{
             p0.itemView.visibility = View.INVISIBLE
             p0.itemView.setLayoutParams(RecyclerView.LayoutParams(0, 0))
+        }
+        if(position == tripDetails.size-1 && !isTripAvailable && price!="0")
+        {
+            Toast.makeText(context,"No $type is available",Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -73,13 +85,16 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 itemView.rupee.maxWidth=24
                 itemView.price.textSize= 20F
                 itemView.rupee.visibility=View.VISIBLE
+
                 itemView.price.text = place.price
                 itemView.rupee.setImageResource(R.drawable.rupee)
             }
 
         }
 
-
     }
+
+
+
 }
 

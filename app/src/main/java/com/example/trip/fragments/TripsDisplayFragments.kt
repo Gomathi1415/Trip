@@ -41,7 +41,7 @@ class TripsDisplayFragments : Fragment(),RecyclerAdapterListener{
 
             availableCityRecyclerView.layoutManager = layoutManager
             recyclerViewAdapter =
-                AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails,"Things to do", this)
+                AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails,"Things to do", this,"0")
             availableCityRecyclerView.adapter = recyclerViewAdapter
 
             return rootView

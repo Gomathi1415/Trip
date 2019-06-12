@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+>
+
+    <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/dialog_message"
+            android:text="Filter by Price"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingBottom="20dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <View
+            android:background="#B6B5B5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+    <RadioGroup
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/rg"
+            android:layout_margin="10dp"
+            android:gravity="right"
+            android:layout_height="wrap_content">
+        <RadioButton android:layout_width="match_parent"
+                     android:text="Rs.10000 Below"
+                     android:textSize="15sp"
+                     android:id="@+id/below_10K"
+                     android:padding="5dp"
+                     android:gravity="left"
+                     android:drawablePadding="30dp"
+                     android:background="#FFFFFF"
+                     android:button="@null"
+                     android:layout_gravity="left"
+                     android:drawableRight="@drawable/radiobutton_selector"
+                     android:layout_height="wrap_content"/>
+        <RadioButton android:layout_width="match_parent"
+                     android:text="Rs.10000 - Rs.15000"
+                     android:id="@+id/inbetween10k_15K"
+                     android:padding="5dp"
+                     android:gravity="left"
+                     android:drawablePadding="30dp"
+                     android:background="#FFFFFF"
+                     android:button="@null"
+                     android:layout_gravity="left"
+                     android:drawableRight="@drawable/radiobutton_selector"
+                     android:textSize="15sp"
+                     android:layout_height="wrap_content"/>
+        <RadioButton android:layout_width="match_parent"
+                     android:text="Rs.15000 - Rs.20000"
+                     android:textSize="15sp"
+                     android:gravity="left"
+                     android:drawablePadding="30dp"
+                     android:background="#FFFFFF"
+                     android:button="@null"
+                     android:layout_gravity="left"
+                     android:drawableRight="@drawable/radiobutton_selector"
+                     android:id="@+id/inbetween15k_20K"
+                     android:padding="5dp"
+                     android:layout_height="wrap_content"/>
+        <RadioButton android:layout_width="match_parent"
+                     android:textSize="15sp"
+                     android:gravity="left"
+                     android:drawablePadding="30dp"
+                     android:background="#FFFFFF"
+                     android:button="@null"
+                     android:layout_gravity="left"
+                     android:drawableRight="@drawable/radiobutton_selector"
+                     android:id="@+id/inbetween20k-30k"
+                     android:text="Rs.20000 - Rs.30000"
+                     android:padding="5dp"
+                     android:layout_height="wrap_content"/>
+        <RadioButton android:layout_width="match_parent"
+                     android:text="Above Rs.30000"
+                     android:id="@+id/above_30"
+                     android:textSize="15sp"
+                     android:gravity="left"
+                     android:drawablePadding="30dp"
+                     android:background="#FFFFFF"
+                     android:button="@null"
+                     android:layout_gravity="left"
+                     android:drawableRight="@drawable/radiobutton_selector"
+                     android:padding="5dp"
+                     android:layout_height="wrap_content"/>
+
+    </RadioGroup>
+    <View
+            android:background="#B6B5B5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    <LinearLayout
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:id="@+id/filterNegativeBtn"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textColor="@color/colorAccent"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        <View
+                android:background="#B6B5B5"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+        <Button
+                android:id="@+id/filterpositiveBtn"
+                android:textColor="@color/colorAccent"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:background="@android:color/transparent"
+                android:text="OK"
+                android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+

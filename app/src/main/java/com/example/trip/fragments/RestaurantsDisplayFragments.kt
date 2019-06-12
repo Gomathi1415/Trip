@@ -33,6 +33,7 @@ class RestaurantsDisplayFragments : Fragment() ,RecyclerAdapterListener{
         ): View? {
 
             rootView = inflater.inflate(R.layout.display_restaurant_names_fragment, container, false)
+
             availableCityRecyclerView = rootView.findViewById(R.id.avalilableRestaurantsRecycleView)
             layoutManager = LinearLayoutManager(context)
 
@@ -41,15 +42,13 @@ class RestaurantsDisplayFragments : Fragment() ,RecyclerAdapterListener{
 
             availableCityRecyclerView.layoutManager = layoutManager
             recyclerViewAdapter =
-                AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails,"Restaurant", this)
+                AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails,"Restaurant", this,"0")
             availableCityRecyclerView.adapter = recyclerViewAdapter
-
 
             return rootView
         }
 
     override fun onTrendingPlaceViewClicked(position: String) {
-        Toast.makeText(context,"djj",Toast.LENGTH_SHORT).show()
 
             recyclerViewAdapterListener = activity as RecyclerAdapterListener
             recyclerViewAdapterListener.onTrendingPlaceViewClicked(position)

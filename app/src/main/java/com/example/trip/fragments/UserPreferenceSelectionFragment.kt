@@ -143,4 +143,5 @@ class UserPreferenceSelectionFragment :Fragment()
         tripsDisplayFragments.initSpotDetails(spotDetails)
     }
 
+
 }

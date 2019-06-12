@@ -2,10 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@+id/action_filter"
-            android:icon="@drawable/tune"
-            app:showAsAction="ifRoom"
-            android:title="Filter"/>
 
+            android:icon="@drawable/tune"
+            android:id="@+id/filtering"
+            app:showAsAction="always"
+            app:actionLayout="@layout/filter_count"
+            android:title="Filter">
+
+    </item>
 
 </menu>
