@@ -43,11 +43,14 @@ class FilterDialogFragment : DialogFragment() {
         radioGroup = view.findViewById<RadioGroup>(R.id.rg) as RadioGroup
         positiveBtn = view.findViewById<Button>(R.id.filterpositiveBtn) as Button
         negativeBtn = view.findViewById<Button>(R.id.filterNegativeBtn) as Button
-        if (savedInstanceState != null) {
-            below_10K.setChecked(savedInstanceState.getBoolean("below_10K"))
+        if(filterItem!=0)
+        {
+            negativeBtn.setText("Clear")
         }
-
-
+        else
+        {
+            negativeBtn.setText("cancel")
+        }
         positiveBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
@@ -63,6 +66,7 @@ class FilterDialogFragment : DialogFragment() {
         })
 
         negativeBtn.setOnClickListener {
+
             isCancelable = false
             filterCommunicator.onDialogMessege("cancel")
             if (filterItem != 0) {

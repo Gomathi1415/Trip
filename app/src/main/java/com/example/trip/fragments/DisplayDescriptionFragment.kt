@@ -46,9 +46,15 @@ return mView
         finalDecription.setText(place.description)
         finalAddress.setText(place.address)
         setHasOptionsMenu(false)
+        webSite.setText(place.websites)
 
           if(place.type=="Hotel") {
               price.setText("Price per night -  ${place.price}/-")
+          }
+          else
+          {
+              price.visibility=View.GONE
+
           }
 
         if(place.phone_no!="")
@@ -60,16 +66,26 @@ return mView
                 startActivity(intent)
             }
         }
+        else
+        {
+            phoneIcon.visibility=View.GONE
+            phoneNumber.visibility=View.GONE
+        }
         finalAddress.setOnClickListener {
             val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}"))
             startActivity(intent)
 
         }
+        webSite.setOnClickListener {
+            val intent = Intent(android.content.Intent.ACTION_VIEW)
+            intent.setData(Uri.parse(place.websites))
+            startActivity(intent)
+        }
 
         tripName=place.tripName
         lat = place.latitude
         long = place.longitude
-        var fab: FloatingActionButton =activity!!.findViewById(R.id.mapButton) as FloatingActionButton
+        var fab: FloatingActionButton =activity!!.findViewById<FloatingActionButton>(R.id.mapButton) as FloatingActionButton
         fab.visibility= View.INVISIBLE
 
 

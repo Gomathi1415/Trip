@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.trip.fragments.AlertFragment
 import com.example.trip.models.TripDetails
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -31,19 +32,17 @@ import com.google.android.gms.maps.model.*
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 
 
-
-
-class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.AlertCommunicator {
-
+class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertCommunicator {
 
 
     private var mLocationPermissionsGranted: Boolean = false
     private lateinit var mMap: GoogleMap
     lateinit var mGps: ImageView
     var currLat: Double = 0.0
+    lateinit var marker : Marker
     var currLong: Double = 0.0
     var isNearBy: Boolean = false
-    var gps_enabled :Boolean = false
+    var gps_enabled: Boolean = false
     private val FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
     private val COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
     private val LOCATION_PERMISSION_REQUEST_CODE = 1234
@@ -70,7 +69,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
             type = intent.getStringExtra("type")
         }
 
-            getLocationPermission()
+        getLocationPermission()
 
 
     }
@@ -103,8 +102,6 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
     }
 
 
-
-
     private fun geoLocate() {
         var index = 0
 
@@ -115,15 +112,14 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
                     LatLng(latlong.latitude.toDouble(), latlong.longitude.toDouble()),
                     10f,
                     latlong.tripName,
-                    index,latlong.type
+                    index, latlong.type
                 )
-            }
-             else if (type == latlong.type && cityName.contains(latlong.city)) {
+            } else if (type == latlong.type && cityName.contains(latlong.city)) {
                 moveCamera(
                     LatLng(latlong.latitude.toDouble(), latlong.longitude.toDouble()),
                     10f,
                     latlong.tripName,
-                    index,latlong.type
+                    index, latlong.type
                 )
 
 
@@ -142,7 +138,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
                 var location = fusedLocationProviderClient.lastLocation.addOnCompleteListener(object :
                     OnCompleteListener<Location> {
                     override fun onComplete(task: Task<Location>) {
-                        if (task.isSuccessful&&task.result!=null&&isLocationEnabled()) {
+                        if (task.isSuccessful && task.result != null && isLocationEnabled()) {
 
                             val currentLocation = task.result as Location
                             currLat = currentLocation.latitude
@@ -151,7 +147,7 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
                                 LatLng(currentLocation.latitude, currentLocation.longitude),
                                 15f,
                                 "My Location",
-                                -1," "
+                                -1, " "
                             )
                             if (isNearBy != true) {
                                 geoLocate()
@@ -160,14 +156,14 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
                             }
 
                         } else {
-                            if(isLocationEnabled()){
+                            if (isLocationEnabled()) {
                                 getDeviceLocation()
                             } else {
-                                   var manager = supportFragmentManager
-                                    var dialog : AlertFragment =
-                                        AlertFragment()
+                                var manager = supportFragmentManager
+                                var dialog: AlertFragment =
+                                    AlertFragment()
 //
-                                   dialog.show(manager,"customDialog")
+                                dialog.show(manager, "customDialog")
                             }
                         }
                     }
@@ -178,41 +174,43 @@ class MapActivity : AppCompatActivity() ,OnMapReadyCallback, AlertFragment.Alert
         }
 
         mGps.setOnClickListener {
-            moveCamera(LatLng(currLat, currLong), 10f, "My Location", -1," ")
+            moveCamera(LatLng(currLat, currLong), 10f, "My Location", -1, " ")
 
         }
     }
 
-    fun moveCamera(latLng: LatLng, zoom: Float, title: String, index: Int,type:String) {
-        var bitmapdraw : BitmapDrawable
-        if(type=="Hotel") {
+    fun moveCamera(latLng: LatLng, zoom: Float, title: String, index: Int, type: String) {
+        val bitmapdraw: BitmapDrawable
+        if (type == "Hotel") {
             bitmapdraw = getResources().getDrawable(R.drawable.hotel_pin) as BitmapDrawable
-        }
-        else if(type == "Restaurant")
-        {
+        } else if (type == "Restaurant") {
             bitmapdraw = getResources().getDrawable(R.drawable.restaurant_pin) as BitmapDrawable
 
-        }
-        else{
+        } else {
             bitmapdraw = getResources().getDrawable(R.drawable.trip_pin) as BitmapDrawable
 
         }
-  var b: Bitmap =bitmapdraw.getBitmap();
-var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
+        var b: Bitmap = bitmapdraw.getBitmap();
+        var smallMarker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
         if (!title.equals("My Location")) {
 
-            var options: MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString()).icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
-            mMap.addMarker(options)
+            var options: MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString())
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+         marker =  mMap.addMarker(options)
+
         }
+
+      mMap.setOnMarkerClickListener{
+          it.showInfoWindow()
+          true
+      }
         mMap.setOnInfoWindowClickListener(OnInfoWindowClickListener {
             var position: String = it.snippet
-
-
             var intent: Intent = Intent(this, ListOfAvailableTripDetailActivity::class.java)
             intent.putExtra("position", position)
-
+            intent.putExtra("cityName",cityName)
             startActivity(intent)
         })
 
@@ -272,7 +270,7 @@ var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
     }
 
     fun nearBy() {
-        var latitude: Double = Math.toRadians(currLat)
+        val latitude: Double = Math.toRadians(currLat)
         var longitude = Math.toRadians(currLong)
         var distance: Double
         var index = 0
@@ -301,7 +299,7 @@ var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
                     LatLng(latlong.latitude.toDouble(), latlong.longitude.toDouble()),
                     10f,
                     latlong.tripName,
-                    index,latlong.type
+                    index, latlong.type
                 )
 
             }
@@ -311,9 +309,9 @@ var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
 
     }
 
-    fun isLocationEnabled():Boolean{
+    fun isLocationEnabled(): Boolean {
 
-        var lm :LocationManager =this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var lm: LocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
 
         try {
@@ -326,15 +324,11 @@ var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
     }
 
 
-
     override fun onDialogMessege(Message: Boolean) {
-        if(Message)
-        {
-            startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),1)
+        if (Message) {
+            startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1)
 
-        }
-        else
-        {
+        } else {
             onBackPressed()
         }
 
@@ -344,6 +338,8 @@ var smallMarker : Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
         getDeviceLocation()
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+
 
 
 }

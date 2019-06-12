@@ -30,20 +30,23 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.display_list_of_trip_detail_activity)
+
+        }
+
+    override fun onResume() {
+        super.onResume()
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
         displayDescriptionFragment = DisplayDescriptionFragment()
         if (intent.hasExtra("position")) {
-            cityName = " "
-         hasIndex = true
+            cityName=intent.getStringExtra("cityName")
+            hasIndex = true
+            getSupportActionBar()!!.title = cityName
             onTrendingPlaceViewClicked(intent.getStringExtra("position"))
-        }
-        else
-        {
+        } else {
             spotDetails = SpotDetails()
-            val toolbar = findViewById(R.id.toolbar) as Toolbar
-            setSupportActionBar(toolbar)
-            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
             userPreferenceSelectionFragment = UserPreferenceSelectionFragment()
-
             val intent: Intent = intent
             cityName = intent.getStringExtra("cityName")
             type = intent.getStringExtra("type")
@@ -62,9 +65,9 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
             }
             userPreferenceSelectionFragment.changeData(spotDetails)
             setFragment(userPreferenceSelectionFragment)
-
         }
     }
+
 
     private fun setFragment(fragment: Fragment): Boolean {
         fragmentTransaction = supportFragmentManager.beginTransaction()
