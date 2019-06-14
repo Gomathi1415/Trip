@@ -24,7 +24,7 @@
             android:background="@drawable/badge_background"
             android:gravity="center"
             android:padding="3dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:text="0"
             android:textSize="10sp"/>
 

@@ -35,6 +35,7 @@ class HotelsDisplayFragments : Fragment(), RecyclerAdapterListener, FilterDialog
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater?) {
+        menu.clear()
         inflater!!.inflate(R.menu.filter_menu, menu)
         val menuItem = menu.findItem(R.id.filtering)
         val actionView = menuItem.actionView

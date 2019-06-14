@@ -30,11 +30,6 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.display_list_of_trip_detail_activity)
-
-        }
-
-    override fun onResume() {
-        super.onResume()
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
@@ -66,6 +61,12 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
             userPreferenceSelectionFragment.changeData(spotDetails)
             setFragment(userPreferenceSelectionFragment)
         }
+
+        }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
 
@@ -102,6 +103,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
 
         }
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){

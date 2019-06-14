@@ -47,7 +47,7 @@ class UserPreferenceSelectionFragment :Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         rootView = inflater.inflate(R.layout.user_preference_selection_fragment, container, false)
-        var fab: FloatingActionButton = activity!!.findViewById(R.id.mapButton) as FloatingActionButton
+        var fab: FloatingActionButton = activity!!.findViewById<FloatingActionButton>(R.id.mapButton) as FloatingActionButton
         fab.visibility = View.VISIBLE
         mapButton = activity!!.findViewById(R.id.mapButton) as FloatingActionButton
         mapButton.setOnClickListener {
@@ -71,7 +71,6 @@ class UserPreferenceSelectionFragment :Fragment()
             tabLayout.visibility = View.GONE
             pager.visibility = View.INVISIBLE
             fragmentScreen.visibility=View.VISIBLE
-
             hotelsDisplayFragments = HotelsDisplayFragments()
             addFragment(hotelsDisplayFragments)
             hotelsDisplayFragments.initSpotDetails(spotDetails)
@@ -126,8 +125,6 @@ class UserPreferenceSelectionFragment :Fragment()
         var fragmentTransaction : FragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentScreen,fragment).commit()
 
-
-
     }
 
     fun openDescription(position: String) {
@@ -142,6 +139,5 @@ class UserPreferenceSelectionFragment :Fragment()
         restaurantsDisplayFragments.initSpotDetails(spotDetails)
         tripsDisplayFragments.initSpotDetails(spotDetails)
     }
-
 
 }

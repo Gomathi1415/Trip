@@ -36,6 +36,8 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="20dp"
                 android:elevation="12dp"
+                app:borderWidth="0dp"
+                android:padding="10dp"
                 android:backgroundTint="@color/colorPrimary"
                 app:srcCompat="@drawable/map_icon"
         />

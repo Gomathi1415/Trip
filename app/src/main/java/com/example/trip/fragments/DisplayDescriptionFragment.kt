@@ -17,6 +17,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.*
+import com.example.trip.models.HotelAmenities
 
 
 class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
@@ -26,6 +27,7 @@ class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
     lateinit var lat:String
     lateinit var tripName :String
     lateinit var long :String
+    lateinit var hotel:HotelAmenities
 
     var position : Int =0
 
@@ -40,6 +42,7 @@ return mView
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         var place = TripDetails.Supplier.tripDetails[position]
+
             displayTypeImage.setImageResource(place.image)
         setHasOptionsMenu(true);
         nameOfTheTrip.setText(place.tripName)
@@ -70,6 +73,57 @@ return mView
         {
             phoneIcon.visibility=View.GONE
             phoneNumber.visibility=View.GONE
+        }
+        if(place.type=="Hotel")
+        {
+
+            for(index in HotelAmenities.Supplier.hotelAmenities)
+            {
+                if(index.hotelName==place.tripName)
+                    hotel=index
+
+            }
+            Damenities.setText("Amenities")
+            if(hotel.roomService)
+            {
+                room_service.visibility=View.VISIBLE
+            }
+            if(hotel.bar)
+            {
+                bar.visibility=View.VISIBLE
+            }
+            if(hotel.freeParking)
+            {
+                parking.visibility=View.VISIBLE
+            }
+            if(hotel.spa)
+            {
+                spa.visibility=View.VISIBLE
+            }
+            if(hotel.gym)
+            {
+                gym.visibility=View.VISIBLE
+            }
+            if(hotel.breakfastIncluded)
+            {
+                breakfast.visibility=View.VISIBLE
+            }
+            if(hotel.freeWiFi)
+            {
+                wifi.visibility=View.VISIBLE
+            }
+            if(hotel.restaurant)
+            {
+                restAvailable.visibility=View.VISIBLE
+            }
+            if(hotel.pool)
+            {
+                pool.visibility=View.VISIBLE
+            }
+        }
+        else
+        {
+            hotelAmenities.visibility=View.GONE
         }
         finalAddress.setOnClickListener {
             val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}"))

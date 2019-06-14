@@ -62,13 +62,19 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
         var searchItem :SearchView = activity!!.findViewById(R.id.citySearchBar)
         searchItem.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(!cityAvailable)
-                    Toast.makeText(context,"No Suggestion Available",Toast.LENGTH_SHORT).show()
+                if(!cityAvailable) {
+                    suggest.visibility=View.VISIBLE
+
+                }
                 return false
             }
             override fun onQueryTextChange(newText: String): Boolean {
+                cityAvailable = false
                 var matchedCity : MutableList<ListOfTrendingPlaces> = mutableListOf()
                 if(newText.length==0){
+                    recent.visibility=View.VISIBLE
+                    suggest.visibility=View.GONE
+
                     recent.setText("Recent Searches")
                     layoutManager = LinearLayoutManager(activity)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -78,29 +84,40 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
                 }
                 else
                 {
-
                 for(city in cityList) {
                     var temp: String = city.toString()
-                    if (temp.toLowerCase().contains(newText.toLowerCase()) && newText.length != 0) {
+                    if (temp.toLowerCase().contains(newText.toLowerCase()) && newText.length != 0)
+                    {
                         matchedCity.add(city)
                         cityAvailable = true
+                        suggest.visibility=View.GONE
+
+                        recent.visibility=View.VISIBLE
+
                         recent.setText("Suggestions")
+
                     }
-                    if (matchedCity != null) {
-                        layoutManager = LinearLayoutManager(activity)
-                        layoutManager.orientation = LinearLayoutManager.VERTICAL
-                        cityNamesRecyclerView.layoutManager = layoutManager
-                        recyclerViewAdapter = CityListAdapter(context, matchedCity, this@DisplaysCityNameFragment)
-                        cityNamesRecyclerView.adapter = recyclerViewAdapter
-                    }
+                    layoutManager = LinearLayoutManager(activity)
+                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                    cityNamesRecyclerView.layoutManager = layoutManager
+                    recyclerViewAdapter = CityListAdapter(context, matchedCity, this@DisplaysCityNameFragment)
+                    cityNamesRecyclerView.adapter = recyclerViewAdapter
+
 
                 }
+                    if (!cityAvailable) {
+                        recent.visibility=View.GONE
+                        suggest.visibility=View.VISIBLE
+
+
+                    }
 
 
                 }
                 return true
             }
         })
+
     }
 
 

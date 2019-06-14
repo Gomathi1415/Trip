@@ -31,6 +31,14 @@
               android:textColor="#919C9C"
               android:text="Recent Searches"
               android:layout_height="wrap_content"/>
+    <TextView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+             android:visibility="gone"
+              android:id="@+id/suggest"
+              android:textSize="24dp"
+              android:text="No Suggestion Available"
+
+    />
     <android.support.v7.widget.RecyclerView
             android:layout_marginTop="5dp"
             android:background="#FFFFFF"

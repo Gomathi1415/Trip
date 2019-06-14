@@ -17,7 +17,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import com.example.trip.fragments.AlertFragment
 import com.example.trip.models.TripDetails
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -57,7 +56,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         mGps = findViewById(R.id.ic_gps) as ImageView
-        var intent: Intent = intent
+        val intent: Intent = intent
 
         if (intent.hasExtra("nearByType")) {
             type = intent.getStringExtra("nearByType")
@@ -159,8 +158,8 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
                             if (isLocationEnabled()) {
                                 getDeviceLocation()
                             } else {
-                                var manager = supportFragmentManager
-                                var dialog: AlertFragment =
+                                val manager = supportFragmentManager
+                                val dialog: AlertFragment =
                                     AlertFragment()
 //
                                 dialog.show(manager, "customDialog")
@@ -190,13 +189,13 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
             bitmapdraw = getResources().getDrawable(R.drawable.trip_pin) as BitmapDrawable
 
         }
-        var b: Bitmap = bitmapdraw.getBitmap();
-        var smallMarker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
+        val b: Bitmap = bitmapdraw.getBitmap();
+        val smallMarker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
         if (!title.equals("My Location")) {
 
-            var options: MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString())
+            val options: MarkerOptions = MarkerOptions().position(latLng).title(title).snippet(index.toString())
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
          marker =  mMap.addMarker(options)
 
@@ -207,8 +206,8 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
           true
       }
         mMap.setOnInfoWindowClickListener(OnInfoWindowClickListener {
-            var position: String = it.snippet
-            var intent: Intent = Intent(this, ListOfAvailableTripDetailActivity::class.java)
+            val position: String = it.snippet
+            val intent: Intent = Intent(this, ListOfAvailableTripDetailActivity::class.java)
             intent.putExtra("position", position)
             intent.putExtra("cityName",cityName)
             startActivity(intent)
@@ -271,19 +270,19 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
     fun nearBy() {
         val latitude: Double = Math.toRadians(currLat)
-        var longitude = Math.toRadians(currLong)
+        val longitude = Math.toRadians(currLong)
         var distance: Double
         var index = 0
 
 
         for (latlong in TripDetails.Supplier.tripDetails) {
 
-            var radius: Double = 6371.0
+            val radius: Double = 6371.0
 
-            var cityLongitute: Double = Math.toRadians(latlong.longitude.toDouble());
-            var cityLatitude: Double = Math.toRadians(latlong.latitude.toDouble());
-            var lon: Double = longitude - cityLongitute;
-            var lat: Double = latitude - cityLatitude;
+            val cityLongitute: Double = Math.toRadians(latlong.longitude.toDouble());
+            val cityLatitude: Double = Math.toRadians(latlong.latitude.toDouble());
+            val lon: Double = longitude - cityLongitute;
+            val lat: Double = latitude - cityLatitude;
             distance = radius * (2 * Math.asin(
                 Math.sqrt(
                     Math.pow(Math.sin(lat / 2), 2.0) + Math.cos(cityLatitude) * Math.cos(latitude) * Math.pow(
@@ -311,7 +310,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
     fun isLocationEnabled(): Boolean {
 
-        var lm: LocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val lm: LocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
 
         try {
