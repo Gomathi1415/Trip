@@ -51,8 +51,8 @@ class HotelsDisplayFragments : Fragment(), RecyclerAdapterListener, FilterDialog
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item)
         if (item.itemId == R.id.filtering) {
-            var manager = childFragmentManager
-            var dialog: FilterDialogFragment =
+            val manager = childFragmentManager
+            val dialog: FilterDialogFragment =
                 FilterDialogFragment.newInstance(filterItem)
             dialog.show(manager, "customDialog")
         }

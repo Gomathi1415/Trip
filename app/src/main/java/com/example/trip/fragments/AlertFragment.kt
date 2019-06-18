@@ -23,7 +23,7 @@ class AlertFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.alert_fragment, null)
+        val view = inflater.inflate(R.layout.alert_fragment, null)
         positiveBtn = view.findViewById<Button>(R.id.positiveBtn) as Button
         negativeBtn = view.findViewById<Button>(R.id.negativeBtn) as Button
         isCancelable = false

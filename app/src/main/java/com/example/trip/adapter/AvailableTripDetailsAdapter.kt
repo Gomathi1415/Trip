@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import com.example.trip.R
 import com.example.trip.RecyclerAdapterListener
 import com.example.trip.models.SpotDetails
@@ -14,14 +12,14 @@ import com.example.trip.models.TripDetails
 import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
-
-
+import com.example.trip.models.HotelAmenities
 
 
 class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var type : String,var listener: RecyclerAdapterListener,var price : String) :
         RecyclerView.Adapter<AvailableTripDetailsAdapter.MyViewHolder>() {
 
     var isTripAvailable = false
+    lateinit var hotel : HotelAmenities
 
 
 
@@ -85,9 +83,23 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 itemView.rupee.maxWidth=24
                 itemView.price.textSize= 20F
                 itemView.rupee.visibility=View.VISIBLE
-
+                itemView.price.visibility=View.VISIBLE
                 itemView.price.text = place.price
                 itemView.rupee.setImageResource(R.drawable.rupee)
+
+                for(index in HotelAmenities.Supplier.hotelAmenities)
+                {
+                    if(index.hotelName==place.tripName) {
+                        hotel = index
+                    }
+                }
+                if(hotel.starType>0) {
+                    itemView.starType.visibility=View.VISIBLE
+                    itemView.starType.setText(hotel.starType.toString()+"-star hotel")
+                }
+                else{
+                    itemView.starType.visibility=View.GONE
+                }
             }
 
         }

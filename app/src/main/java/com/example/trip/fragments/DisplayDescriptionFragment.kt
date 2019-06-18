@@ -15,35 +15,34 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.*
 import com.example.trip.models.HotelAmenities
 
 
-class DisplayDescriptionFragment : Fragment(),OnMapReadyCallback {
-    lateinit var mGoogleMap : GoogleMap
+class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
+    lateinit var mGoogleMap: GoogleMap
     lateinit var mMapView: MapView
-    lateinit var mView : View
-    lateinit var lat:String
-    lateinit var tripName :String
-    lateinit var long :String
-    lateinit var hotel:HotelAmenities
+    lateinit var mView: View
+    lateinit var lat: String
+    lateinit var tripName: String
+    lateinit var long: String
+    lateinit var hotel: HotelAmenities
 
-    var position : Int =0
+    var position: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-         mView = inflater.inflate(R.layout.display_description_fragment, container, false)
+        mView = inflater.inflate(R.layout.display_description_fragment, container, false)
 
 
 
-return mView
+        return mView
     }
 
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        var place = TripDetails.Supplier.tripDetails[position]
+        val place = TripDetails.Supplier.tripDetails[position]
 
-            displayTypeImage.setImageResource(place.image)
+        displayTypeImage.setImageResource(place.image)
         setHasOptionsMenu(true);
         nameOfTheTrip.setText(place.tripName)
         finalDecription.setText(place.description)
@@ -51,82 +50,69 @@ return mView
         setHasOptionsMenu(false)
         webSite.setText(place.websites)
 
-          if(place.type=="Hotel") {
-              price.setText("Price per night -  ${place.price}/-")
-          }
-          else
-          {
-              price.visibility=View.GONE
 
-          }
+        if (place.type == "Hotel") {
+            price.setText("Price per night -  ${place.price}/-")
+        } else {
+            price.visibility = View.GONE
 
-        if(place.phone_no!="")
-        {
+        }
+
+        if (place.phone_no != "") {
             phoneIcon.setImageResource(R.drawable.phone)
             phoneNumber.setText(place.phone_no)
             phoneNumber.setOnClickListener {
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.phone_no.trim()))
                 startActivity(intent)
             }
+        } else {
+            phoneIcon.visibility = View.GONE
+            phoneNumber.visibility = View.GONE
         }
-        else
-        {
-            phoneIcon.visibility=View.GONE
-            phoneNumber.visibility=View.GONE
-        }
-        if(place.type=="Hotel")
-        {
+        if (place.type == "Hotel") {
 
-            for(index in HotelAmenities.Supplier.hotelAmenities)
-            {
-                if(index.hotelName==place.tripName)
-                    hotel=index
+            for (index in HotelAmenities.Supplier.hotelAmenities) {
+                if (index.hotelName == place.tripName)
+                    hotel = index
 
             }
             Damenities.setText("Amenities")
-            if(hotel.roomService)
-            {
-                room_service.visibility=View.VISIBLE
+
+            if (hotel.roomService) {
+                room_service.visibility = View.VISIBLE
             }
-            if(hotel.bar)
-            {
-                bar.visibility=View.VISIBLE
+            if (hotel.bar) {
+                bar.visibility = View.VISIBLE
             }
-            if(hotel.freeParking)
-            {
-                parking.visibility=View.VISIBLE
+            if (hotel.freeParking) {
+                parking.visibility = View.VISIBLE
             }
-            if(hotel.spa)
-            {
-                spa.visibility=View.VISIBLE
+            if (hotel.spa) {
+                spa.visibility = View.VISIBLE
             }
-            if(hotel.gym)
-            {
-                gym.visibility=View.VISIBLE
+            if (hotel.gym) {
+                gym.visibility = View.VISIBLE
             }
-            if(hotel.breakfastIncluded)
-            {
-                breakfast.visibility=View.VISIBLE
+            if (hotel.breakfastIncluded) {
+                breakfast.visibility = View.VISIBLE
             }
-            if(hotel.freeWiFi)
-            {
-                wifi.visibility=View.VISIBLE
+            if (hotel.freeWiFi) {
+                wifi.visibility = View.VISIBLE
             }
-            if(hotel.restaurant)
-            {
-                restAvailable.visibility=View.VISIBLE
+            if (hotel.restaurant) {
+                restAvailable.visibility = View.VISIBLE
             }
-            if(hotel.pool)
-            {
-                pool.visibility=View.VISIBLE
+            if (hotel.pool) {
+                pool.visibility = View.VISIBLE
             }
-        }
-        else
-        {
-            hotelAmenities.visibility=View.GONE
+        } else {
+            hotelAmenities.visibility = View.GONE
         }
         finalAddress.setOnClickListener {
-            val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}"))
+            val intent = Intent(
+                android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}")
+            )
             startActivity(intent)
 
         }
@@ -136,61 +122,56 @@ return mView
             startActivity(intent)
         }
 
-        tripName=place.tripName
+        tripName = place.tripName
         lat = place.latitude
         long = place.longitude
-        var fab: FloatingActionButton =activity!!.findViewById<FloatingActionButton>(R.id.mapButton) as FloatingActionButton
-        fab.visibility= View.INVISIBLE
+        val fab: FloatingActionButton =
+            activity!!.findViewById<FloatingActionButton>(R.id.mapButton) as FloatingActionButton
+        fab.visibility = View.INVISIBLE
 
 
         super.onActivityCreated(savedInstanceState)
     }
+
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu!!.clear()
 
-        }
-
-
-
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        mMapView=mView.findViewById(R.id.mapView)
-        if(mMapView != null)
-        {
-            mMapView.onCreate(null)
-            mMapView.onResume()
-            mMapView.getMapAsync(this)
-        }
+        mMapView = mView.findViewById(R.id.mapView)
+        mMapView.onCreate(null)
+        mMapView.onResume()
+        mMapView.getMapAsync(this)
+
     }
-
-
 
 
     fun positionNumber(position: String) {
-        this.position=position.toInt()
+        this.position = position.toInt()
 
     }
+
     override fun onMapReady(googleMap: GoogleMap) {
-          MapsInitializer.initialize(context)
-        mGoogleMap= googleMap
-        googleMap.mapType=GoogleMap.MAP_TYPE_NORMAL
-       googleMap.addMarker(MarkerOptions().position(LatLng(lat.toDouble(),long.toDouble())).title((tripName)))
-        var mapPlace : CameraPosition = CameraPosition.builder().target(LatLng(lat.toDouble(),long.toDouble())).zoom(16F).bearing(0F).tilt(45F).build()
+        MapsInitializer.initialize(context)
+        mGoogleMap = googleMap
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        googleMap.addMarker(MarkerOptions().position(LatLng(lat.toDouble(), long.toDouble())).title((tripName)))
+        val mapPlace: CameraPosition =
+            CameraPosition.builder().target(LatLng(lat.toDouble(), long.toDouble())).zoom(16F).bearing(0F).tilt(45F)
+                .build()
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(mapPlace))
         mGoogleMap.uiSettings.isZoomControlsEnabled = true
-        mGoogleMap.uiSettings.isScrollGesturesEnabled=true
-        mGoogleMap.uiSettings.isZoomGesturesEnabled=true
-
-
+        mGoogleMap.uiSettings.isScrollGesturesEnabled = true
+        mGoogleMap.uiSettings.isZoomGesturesEnabled = true
 
     }
 
 
-
-    }
+}
 
 
 

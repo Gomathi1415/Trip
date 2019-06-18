@@ -2,21 +2,20 @@ package com.example.trip
 
 import android.Manifest
 import android.content.Context
-
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.location.LocationManager
-
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.example.trip.fragments.AlertFragment
 import com.example.trip.models.TripDetails
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -29,10 +28,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
+import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.*
 
-
-class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertCommunicator {
-
+class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertCommunicator{
 
     private var mLocationPermissionsGranted: Boolean = false
     private lateinit var mMap: GoogleMap
@@ -47,15 +45,13 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
     private val LOCATION_PERMISSION_REQUEST_CODE = 1234
     lateinit var cityName: String
     lateinit var type: String
-
-
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    lateinit var position: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
-        mGps = findViewById(R.id.ic_gps) as ImageView
+        mGps = findViewById<ImageView>(R.id.ic_gps) as ImageView
         val intent: Intent = intent
 
         if (intent.hasExtra("nearByType")) {
@@ -70,14 +66,11 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
         getLocationPermission()
 
-
     }
 
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-
 
         if (mLocationPermissionsGranted) {
             getDeviceLocation()
@@ -159,8 +152,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
                                 getDeviceLocation()
                             } else {
                                 val manager = supportFragmentManager
-                                val dialog: AlertFragment =
-                                    AlertFragment()
+                                val dialog= AlertFragment()
 //
                                 dialog.show(manager, "customDialog")
                             }
@@ -184,13 +176,11 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
             bitmapdraw = getResources().getDrawable(R.drawable.hotel_pin) as BitmapDrawable
         } else if (type == "Restaurant") {
             bitmapdraw = getResources().getDrawable(R.drawable.restaurant_pin) as BitmapDrawable
-
         } else {
             bitmapdraw = getResources().getDrawable(R.drawable.trip_pin) as BitmapDrawable
-
         }
-        val b: Bitmap = bitmapdraw.getBitmap();
-        val smallMarker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false);
+        val b: Bitmap = bitmapdraw.getBitmap()
+        val smallMarker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false)
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
         if (!title.equals("My Location")) {
@@ -200,24 +190,19 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
          marker =  mMap.addMarker(options)
 
         }
+        mMap.setInfoWindowAdapter( MyInfoWindowAdapter());
 
-      mMap.setOnMarkerClickListener{
-          it.showInfoWindow()
-          true
-      }
         mMap.setOnInfoWindowClickListener(OnInfoWindowClickListener {
-            val position: String = it.snippet
-            val intent: Intent = Intent(this, ListOfAvailableTripDetailActivity::class.java)
+             position = it.snippet
+            val intent = Intent(this, ListOfAvailableTripDetailActivity::class.java)
             intent.putExtra("position", position)
             intent.putExtra("cityName",cityName)
             startActivity(intent)
         })
 
-
     }
 
     private fun initMap() {
-        Log.d("tag", "initMap: initializing map")
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this@MapActivity)
     }
@@ -277,12 +262,12 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
         for (latlong in TripDetails.Supplier.tripDetails) {
 
-            val radius: Double = 6371.0
+            val radius= 6371.0
 
-            val cityLongitute: Double = Math.toRadians(latlong.longitude.toDouble());
-            val cityLatitude: Double = Math.toRadians(latlong.latitude.toDouble());
-            val lon: Double = longitude - cityLongitute;
-            val lat: Double = latitude - cityLatitude;
+            val cityLongitude: Double = Math.toRadians(latlong.longitude.toDouble())
+            val cityLatitude: Double = Math.toRadians(latlong.latitude.toDouble())
+            val lon: Double = longitude - cityLongitude
+            val lat: Double = latitude - cityLatitude
             distance = radius * (2 * Math.asin(
                 Math.sqrt(
                     Math.pow(Math.sin(lat / 2), 2.0) + Math.cos(cityLatitude) * Math.cos(latitude) * Math.pow(
@@ -323,8 +308,8 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
     }
 
 
-    override fun onDialogMessege(Message: Boolean) {
-        if (Message) {
+    override fun onDialogMessege(message: Boolean) {
+        if (message) {
             startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1)
 
         } else {
@@ -338,7 +323,54 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    internal inner class MyInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
 
+        private val myContentsView: View
 
+        init {
+
+            myContentsView = layoutInflater.inflate(R.layout.list_of_available_trip_detail_card_view, null)
+
+        }
+
+        override fun getInfoWindow(marker: Marker): View? {
+            return null
+        }
+
+        override fun getInfoContents(marker: Marker): View? {
+            position = marker.snippet
+            val place = TripDetails.Supplier.tripDetails[position.toInt()]
+            val typeImage : ImageView = myContentsView.findViewById(R.id.typeImage) as ImageView
+            val name : TextView = myContentsView.findViewById(R.id.name) as TextView
+            val address : TextView = myContentsView.findViewById(R.id.address) as TextView
+            val review : TextView = myContentsView.findViewById(R.id.review) as TextView
+            val description : TextView = myContentsView.findViewById(R.id.description) as TextView
+            val rupee : ImageView = myContentsView.findViewById(R.id.rupee) as ImageView
+            val price : TextView = myContentsView.findViewById(R.id.price) as TextView
+
+            typeImage.setImageResource(place.image)
+            name.setText(place.tripName)
+            address.setText(place.address)
+
+            review.setText(place.reviews.toString())
+            description.setText(place.description)
+            if(place.type=="Hotel") {
+                rupee.maxHeight=24
+                rupee.maxWidth=24
+                price.textSize= 20F
+                rupee.visibility=View.VISIBLE
+                price.visibility = View.VISIBLE
+                price.text = place.price
+                rupee.setImageResource(R.drawable.rupee)
+            }
+            else
+            {
+                rupee.visibility=View.GONE
+                price.visibility=View.GONE
+            }
+
+            return myContentsView
+        }
+    }
 
 }

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
 import com.example.trip.R
 import kotlinx.android.synthetic.main.filter_dialog_fragment.*
 
@@ -39,7 +38,7 @@ class FilterDialogFragment : DialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.filter_dialog_fragment, null)
+        val view = inflater.inflate(R.layout.filter_dialog_fragment, null)
         radioGroup = view.findViewById<RadioGroup>(R.id.rg) as RadioGroup
         positiveBtn = view.findViewById<Button>(R.id.filterpositiveBtn) as Button
         negativeBtn = view.findViewById<Button>(R.id.filterNegativeBtn) as Button
@@ -56,7 +55,7 @@ class FilterDialogFragment : DialogFragment() {
 
                 val i: Int = radioGroup.checkedRadioButtonId
                 if (view.findViewById<RadioButton>(i) != null) {
-                    var rb: RadioButton = view.findViewById(i)
+                    val rb: RadioButton = view.findViewById(i)
                     filterCommunicator.onDialogMessege(rb.text.toString())
 
                 }

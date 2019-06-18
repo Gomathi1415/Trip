@@ -1,6 +1,5 @@
 package com.example.trip
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,20 +7,16 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.widget.Toast
 import com.example.trip.fragments.DisplayDescriptionFragment
 import com.example.trip.fragments.UserPreferenceSelectionFragment
 import com.example.trip.models.ListOfTrendingPlaces
 import com.example.trip.models.SpotDetails
 
-
-
-
-class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterListener,RecyclerAdapterListener {
+class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterListener, RecyclerAdapterListener {
 
     lateinit var cityName: String
-    lateinit var type: String
-    var hasIndex : Boolean = false
+    var type: String = " "
+    var hasIndex: Boolean = false
     lateinit var spotDetails: SpotDetails
     lateinit var fragmentTransaction: FragmentTransaction
     lateinit var displayDescriptionFragment: DisplayDescriptionFragment
@@ -35,7 +30,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
         displayDescriptionFragment = DisplayDescriptionFragment()
         if (intent.hasExtra("position")) {
-            cityName=intent.getStringExtra("cityName")
+            cityName = intent.getStringExtra("cityName")
             hasIndex = true
             getSupportActionBar()!!.title = cityName
             onTrendingPlaceViewClicked(intent.getStringExtra("position"))
@@ -45,7 +40,6 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
             val intent: Intent = intent
             cityName = intent.getStringExtra("cityName")
             type = intent.getStringExtra("type")
-
             getSupportActionBar()!!.title = cityName
             spotDetails.cityName = cityName
             spotDetails.type = type
@@ -62,27 +56,22 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
             setFragment(userPreferenceSelectionFragment)
         }
 
-        }
-
-    override fun onResume() {
-        super.onResume()
-
     }
-
 
     private fun setFragment(fragment: Fragment): Boolean {
         fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.listfragmentScreen, fragment).commit()
+        fragmentTransaction.replace(R.id.listfragmentScreen, fragment, "UserPreferenceSelectionFragment").commit()
         return true
     }
 
     override fun openMapListener(string: String) {
         val intent = Intent(this, MapActivity::class.java)
-        intent.putExtra("cityName",cityName)
-        intent.putExtra("type",type)
+        intent.putExtra("cityName", cityName)
+        intent.putExtra("type", type)
         startActivity(intent)
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -100,17 +89,14 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(),MapViewAdapterList
             fragmentTransaction.replace(R.id.listfragmentScreen, displayDescriptionFragment).addToBackStack(null)
                 .commit()
 
-
         }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return false
     }
-
 
 }

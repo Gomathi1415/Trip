@@ -22,6 +22,7 @@ data class ListOfTrendingPlaces(var title: String)
             ListOfTrendingPlaces("Wayanad,Kerala"),
             ListOfTrendingPlaces("Ooty,TamilNadu"),
             ListOfTrendingPlaces("Thekkady,Kerala"),
+            ListOfTrendingPlaces("Kodaikanal,TamilNadu"),
             ListOfTrendingPlaces("Chennai,TamilNadu")
 
         )
