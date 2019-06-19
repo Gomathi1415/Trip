@@ -14,8 +14,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
+import android.graphics.Matrix
 import android.net.Uri
 import android.view.*
+import com.example.trip.adapter.DescriptionViewPagerAdapter
+import com.example.trip.adapter.ViewPagerAdapter
 import com.example.trip.models.HotelAmenities
 
 
@@ -27,14 +30,10 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
     lateinit var tripName: String
     lateinit var long: String
     lateinit var hotel: HotelAmenities
-
     var position: Int = 0
-
+    lateinit var adapter: DescriptionViewPagerAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.display_description_fragment, container, false)
-
-
-
         return mView
     }
 
@@ -42,8 +41,9 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         val place = TripDetails.Supplier.tripDetails[position]
 
-        displayTypeImage.setImageResource(place.image)
-        setHasOptionsMenu(true);
+        adapter = DescriptionViewPagerAdapter(context!!,place.imagess)
+        descViewpager.adapter = adapter
+        setHasOptionsMenu(true)
         nameOfTheTrip.setText(place.tripName)
         finalDecription.setText(place.description)
         finalAddress.setText(place.address)

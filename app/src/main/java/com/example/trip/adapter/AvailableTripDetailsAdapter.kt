@@ -76,7 +76,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 itemView.description.text = place.description
                 this.name = place.tripName
                 this.currPosition = pos
-                itemView.typeImage.setImageResource(place.image)
+                itemView.typeImage.setImageResource(place.imagess[0])
             itemView.review.text = place.reviews.toString()
             if(type=="Hotel") {
                 itemView.rupee.maxHeight=24

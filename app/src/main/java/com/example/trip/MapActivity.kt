@@ -348,7 +348,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
             val rupee : ImageView = myContentsView.findViewById(R.id.rupee) as ImageView
             val price : TextView = myContentsView.findViewById(R.id.price) as TextView
 
-            typeImage.setImageResource(place.image)
+            typeImage.setImageResource(place.imagess[0])
             name.setText(place.tripName)
             address.setText(place.address)
 
