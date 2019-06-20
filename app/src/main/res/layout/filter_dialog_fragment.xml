@@ -124,16 +124,17 @@
             android:background="#FFFFFF"
             android:layout_height="wrap_content">
         <RadioButton android:layout_width="match_parent"
-                     android:textSize="15sp"
                      android:text="1 and up"
-                     android:id="@+id/oneRating"
                      android:padding="5dp"
-                     android:gravity="left"
+                     android:id="@+id/oneRating"
                      android:layout_marginLeft="30dp"
+                     android:gravity="left"
                      android:drawablePadding="30dp"
+                     android:background="#FFFFFF"
                      android:button="@null"
                      android:layout_gravity="left"
                      android:drawableRight="@drawable/radiobutton_selector"
+                     android:textSize="15sp"
                      android:layout_height="wrap_content"/>
 
         <RadioButton android:layout_width="match_parent"

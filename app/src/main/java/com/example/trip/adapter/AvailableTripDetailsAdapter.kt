@@ -2,7 +2,6 @@ package com.example.trip.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
     var isTripAvailable = false
     lateinit var hotel : HotelAmenities
     lateinit var filterHotelClass : HotelAmenities
+
 
 
 
@@ -56,7 +56,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
             p0.itemView.visibility = View.INVISIBLE
             p0.itemView.setLayoutParams(RecyclerView.LayoutParams(0, 0))
         }
-        if(position == tripDetails.size-1 && !isTripAvailable && price!="0")
+        if(position == tripDetails.size-1 && !isTripAvailable )
         {
             Toast.makeText(context,"No $type is available",Toast.LENGTH_SHORT).show()
         }
@@ -108,30 +108,26 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
 
             }
             if(type=="Hotel") {
-                itemView.rupee.maxHeight=24
-                itemView.rupee.maxWidth=24
-                itemView.price.textSize= 20F
-                itemView.rupee.visibility=View.VISIBLE
-                itemView.price.visibility=View.VISIBLE
+                itemView.rupee.maxHeight = 24
+                itemView.rupee.maxWidth = 24
+                itemView.price.textSize = 20F
+                itemView.rupee.visibility = View.VISIBLE
+                itemView.price.visibility = View.VISIBLE
                 itemView.price.text = place.price
                 itemView.rupee.setImageResource(R.drawable.rupee)
 
-                for(index in HotelAmenities.Supplier.hotelAmenities)
-                {
-                    if(index.hotelName==place.tripName) {
+                for (index in HotelAmenities.Supplier.hotelAmenities) {
+                    if (index.hotelName == place.tripName) {
                         hotel = index
                     }
                 }
-                if(hotel.starType>0) {
-                    itemView.starType.visibility=View.VISIBLE
-                    itemView.starType.setText(hotel.starType.toString()+"-star hotel")
+                if (hotel.starType > 0) {
+                    itemView.starType.visibility = View.VISIBLE
+                    itemView.starType.setText(hotel.starType.toString() + "-star hotel")
+                } else {
+                    itemView.starType.visibility = View.GONE
                 }
-                else{
-                    itemView.starType.visibility=View.GONE
-                }
-
             }
-
         }
 
     }
