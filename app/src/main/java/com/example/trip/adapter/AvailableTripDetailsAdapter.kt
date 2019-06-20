@@ -2,6 +2,7 @@ package com.example.trip.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,17 +16,30 @@ import android.widget.Toast
 import com.example.trip.models.HotelAmenities
 
 
-class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var type : String,var listener: RecyclerAdapterListener,var price : String) :
+class AvailableTripDetailsAdapter(val context: Context, val tripDetails : MutableList<TripDetails>,var spotDetails: SpotDetails,var type : String,var listener: RecyclerAdapterListener,var price : String,var rating:String,var hotelClass : String,var dietType : String) :
         RecyclerView.Adapter<AvailableTripDetailsAdapter.MyViewHolder>() {
 
     var isTripAvailable = false
     lateinit var hotel : HotelAmenities
+    lateinit var filterHotelClass : HotelAmenities
 
 
 
     override fun onBindViewHolder(p0: MyViewHolder, position: Int) {
         val place: TripDetails = tripDetails[position]
-         if (type == place.type && spotDetails.cityName.contains(place.city) && (price=="0" || (price=="1" && place.price.toDouble()<10000.toDouble()) || (price=="2" && place.price.toDouble()>10000.toDouble() && place.price.toDouble()<15000.toDouble()) || (price=="3" && place.price.toDouble()>15000.toDouble() && place.price.toDouble()<20000.toDouble())|| (price=="4" && place.price.toDouble()>20000.toDouble() && place.price.toDouble()<30000.toDouble()) || (price=="5" && place.price.toDouble()>30000.toDouble()) ))
+        for(index in HotelAmenities.Supplier.hotelAmenities)
+        {
+            if(index.hotelName==place.tripName) {
+                filterHotelClass = index
+            }
+        }
+
+         if (type == place.type && spotDetails.cityName.contains(place.city)
+             && (price=="0" || (price=="1" && place.price.toDouble()<10000.toDouble()) || (price=="2" && place.price.toDouble()>10000.toDouble() && place.price.toDouble()<15000.toDouble()) || (price=="3" && place.price.toDouble()>15000.toDouble() && place.price.toDouble()<20000.toDouble())|| (price=="4" && place.price.toDouble()>20000.toDouble() && place.price.toDouble()<30000.toDouble()) || (price=="5" && place.price.toDouble()>30000.toDouble()))
+             &&(rating=="0"||(rating=="1" && place.reviews>=1.toDouble()) || (rating=="2" && place.reviews.toInt()>=2) || (rating=="3" && place.reviews>=3.toDouble()) || (rating=="4" && place.reviews>=4.toDouble()))
+             &&(hotelClass=="0" || ( filterHotelClass.starType==(hotelClass.toInt()+1)))
+             &&(dietType=="0" ||(dietType=="1" && place.diet=="veg")||(dietType=="2" && place.diet=="non-veg")||(dietType=="3" && place.diet=="both"))
+         )
         {
 
             p0.itemView.setVisibility(View.VISIBLE)
@@ -78,6 +92,21 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 this.currPosition = pos
                 itemView.typeImage.setImageResource(place.imagess[0])
             itemView.review.text = place.reviews.toString()
+            if(place.type=="Restaurant")
+            {
+                itemView.starType.visibility=View.VISIBLE
+                if(place.diet=="both")
+                    itemView.starType.setText("Veg and Non-Veg")
+                else
+                {
+                    itemView.starType.setText(place.diet)
+                }
+            }
+            else
+            {
+                itemView.starType.visibility=View.GONE
+
+            }
             if(type=="Hotel") {
                 itemView.rupee.maxHeight=24
                 itemView.rupee.maxWidth=24
@@ -100,6 +129,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 else{
                     itemView.starType.visibility=View.GONE
                 }
+
             }
 
         }
