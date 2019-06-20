@@ -15,8 +15,6 @@ import kotlinx.android.synthetic.main.trending_place_card_view.view.*
 class TrendingPlaceAdapter(val context: Context, val trendingplaces : MutableList<ListOfTrendingPlaces>, val  trendingplacesimage: Array<Int>,var listener:RecyclerAdapterListener) :
     RecyclerView.Adapter<TrendingPlaceAdapter.MyViewHolder>() {
 
-
-
     override fun onBindViewHolder(p0: MyViewHolder, p1: Int) {
         val place: ListOfTrendingPlaces = trendingplaces[p1]
         val image = trendingplacesimage[p1]
@@ -39,7 +37,7 @@ class TrendingPlaceAdapter(val context: Context, val trendingplaces : MutableLis
         init {
             itemView.setOnClickListener {
                  listener.onTrendingPlaceViewClicked(currCity)
-//
+
             }
         }
         fun setData(place:ListOfTrendingPlaces, pos : Int, image :Int) {

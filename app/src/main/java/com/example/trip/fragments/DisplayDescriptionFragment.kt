@@ -16,13 +16,20 @@ import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
 import android.graphics.Matrix
 import android.net.Uri
+import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.Toast
+import com.example.trip.DisplayFullImageListener
 import com.example.trip.adapter.DescriptionViewPagerAdapter
 import com.example.trip.adapter.ViewPagerAdapter
 import com.example.trip.models.HotelAmenities
+import kotlinx.android.synthetic.main.explore_fragment.*
 
 
-class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
+class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullImageListener {
+
+
     lateinit var mGoogleMap: GoogleMap
     lateinit var mMapView: MapView
     lateinit var mView: View
@@ -31,18 +38,41 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
     lateinit var long: String
     lateinit var hotel: HotelAmenities
     var position: Int = 0
+    var imagePosition:Int=0
+    lateinit var displayFullImageListener :DisplayFullImageListener
     lateinit var adapter: DescriptionViewPagerAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.display_description_fragment, container, false)
+
         return mView
     }
 
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
         val place = TripDetails.Supplier.tripDetails[position]
 
-        adapter = DescriptionViewPagerAdapter(context!!,place.imagess)
+        adapter = DescriptionViewPagerAdapter(context!!,place.imagess,this)
         descViewpager.adapter = adapter
+        descViewpager.setCurrentItem(0)
+        imagePosition = 0
+        val previousLayout : LinearLayout = activity!!.findViewById(R.id.prevLay) as LinearLayout
+        val nextLayout : LinearLayout = activity!!.findViewById(R.id.nextLay) as LinearLayout
+        next.setOnClickListener {
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem()+1,true)
+        }
+        nextLayout.setOnClickListener {
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem()+1,true)
+        }
+        previousLayout.setOnClickListener {
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem()-1,true)
+
+        }
+        previous.setOnClickListener {
+
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem()-1,true)
+        }
+
         setHasOptionsMenu(true)
         nameOfTheTrip.setText(place.tripName)
         finalDecription.setText(place.description)
@@ -125,8 +155,7 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
         tripName = place.tripName
         lat = place.latitude
         long = place.longitude
-        val fab: FloatingActionButton =
-            activity!!.findViewById<FloatingActionButton>(R.id.mapButton) as FloatingActionButton
+        val fab: FloatingActionButton = activity!!.findViewById<View>(R.id.mapButton) as FloatingActionButton
         fab.visibility = View.INVISIBLE
 
 
@@ -169,9 +198,29 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback {
         mGoogleMap.uiSettings.isZoomGesturesEnabled = true
 
     }
+    override fun openImage(imagePosition: String, tripPosition: String) {
+         this.imagePosition=imagePosition.toInt()
+        displayFullImageListener = activity as DisplayFullImageListener
+        displayFullImageListener.openImage(imagePosition,position.toString())
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(imagePosition!=0)
+        {
+            descViewpager.setCurrentItem(imagePosition)
+        }
+        else {
+            descViewpager.setCurrentItem(0)
+        }
+    }
 
 
-}
+    }
+
+
+
 
 
 

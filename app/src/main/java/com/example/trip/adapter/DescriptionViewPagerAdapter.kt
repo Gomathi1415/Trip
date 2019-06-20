@@ -2,20 +2,21 @@ package com.example.trip.adapter
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.Toast
+import com.example.trip.DisplayFullImageListener
 import com.example.trip.R
+import kotlinx.android.synthetic.main.display_description_fragment.*
 
-class DescriptionViewPagerAdapter(
-    var context: Context,
-    var images: MutableList<Int>
-
-) : PagerAdapter() {
+class DescriptionViewPagerAdapter(var context: Context, var images: MutableList<Int>,var listener: DisplayFullImageListener) : PagerAdapter() {
 
     lateinit var inflater: LayoutInflater
+
     override fun isViewFromObject(view: View, p1: Any): Boolean {
         return view == p1
     }
@@ -24,21 +25,21 @@ class DescriptionViewPagerAdapter(
         return images.size
     }
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-
+    override fun instantiateItem(container: ViewGroup,position: Int): Any {
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val itemView: View = inflater.inflate(R.layout.view_pager_item, null)
-        val image: LinearLayout
-        val backtext: TextView
-        val backSubText: TextView
-        backSubText = itemView.findViewById(R.id.backgroundSubText) as TextView
-        backtext = itemView.findViewById(R.id.backgroundMainText) as TextView
-        image = itemView.findViewById(R.id.backImageView) as LinearLayout
+        val itemView: View = inflater.inflate(R.layout.desc_view_pager_item, null)
+        val image: ImageView
+        image = itemView.findViewById(R.id.FullbackImageView) as ImageView
         image.setBackgroundResource(images[position])
-
         container.addView(itemView, 0)
+        itemView.setOnClickListener {
+          listener.openImage(position.toString(),"")
+
+        }
+
         return itemView
     }
+
 
     override fun destroyItem(container: ViewGroup, position: Int, object1: Any) {
         val viewPager = container

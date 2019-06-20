@@ -12,7 +12,9 @@ import com.example.trip.fragments.UserPreferenceSelectionFragment
 import com.example.trip.models.ListOfTrendingPlaces
 import com.example.trip.models.SpotDetails
 
-class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterListener, RecyclerAdapterListener {
+class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterListener, RecyclerAdapterListener,DisplayFullImageListener {
+
+
 
     lateinit var cityName: String
     var type: String = " "
@@ -98,5 +100,12 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
         }
         return false
     }
+    override fun openImage(position: String,tripPosition:String) {
+        val intent : Intent = Intent(this,FullScreenActivity::class.java)
+        intent.putExtra("position",position)
+        intent.putExtra("tripPosition",tripPosition)
+        startActivity(intent)    }
+
+
 
 }

@@ -127,6 +127,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
 
             }
 
+
     fun changeData(type : String)
     {
         this.type = type

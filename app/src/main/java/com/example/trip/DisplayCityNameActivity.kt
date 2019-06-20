@@ -13,7 +13,10 @@ class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterL
     override fun openMapListener(string: String) {
         val intent  =Intent(this, MapActivity::class.java)
         intent.putExtra("nearByType",string)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 
 
@@ -30,6 +33,7 @@ class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterL
                 displaysCityNameFragment.changeData(type)
                 setFragment(displaysCityNameFragment)
 
+
 }
     private fun setFragment(fragment: Fragment): Boolean {
         val fragmentTransaction : FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -44,7 +48,10 @@ class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterL
         val intent =Intent(this, ListOfAvailableTripDetailActivity::class.java)
         intent.putExtra("cityName",cityName)
         intent.putExtra("type",type)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
 
     }
 }
