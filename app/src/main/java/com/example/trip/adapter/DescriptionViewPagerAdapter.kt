@@ -13,9 +13,10 @@ import com.example.trip.DisplayFullImageListener
 import com.example.trip.R
 import kotlinx.android.synthetic.main.display_description_fragment.*
 
-class DescriptionViewPagerAdapter(var context: Context, var images: MutableList<Int>,var listener: DisplayFullImageListener) : PagerAdapter() {
+class DescriptionViewPagerAdapter(var context: Context, var images: MutableList<Int>,var listener: DisplayFullImageListener,var id :  Int) : PagerAdapter() {
 
     lateinit var inflater: LayoutInflater
+    lateinit var itemView: View
 
     override fun isViewFromObject(view: View, p1: Any): Boolean {
         return view == p1
@@ -27,7 +28,13 @@ class DescriptionViewPagerAdapter(var context: Context, var images: MutableList<
 
     override fun instantiateItem(container: ViewGroup,position: Int): Any {
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val itemView: View = inflater.inflate(R.layout.desc_view_pager_item, null)
+        if(id==1) {
+             itemView = inflater.inflate(R.layout.desc_view_pager_item, null)
+        }else
+        {
+            itemView = inflater.inflate(R.layout.full_screen_view_pager, null)
+
+        }
         val image: ImageView
         image = itemView.findViewById(R.id.FullbackImageView) as ImageView
         image.setBackgroundResource(images[position])

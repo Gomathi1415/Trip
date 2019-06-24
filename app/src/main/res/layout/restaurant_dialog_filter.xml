@@ -10,7 +10,6 @@
             android:layout_marginTop="10dp"
             android:id="@+id/dialog_message"
             android:text="FILTER"
-
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingLeft="15dp"
@@ -26,7 +25,6 @@
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Filter by Rating:"
-
               android:textSize="15sp"
               android:textStyle="bold"
               android:paddingLeft="15dp"
@@ -97,7 +95,6 @@
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Filter by Diet Type:"
-
               android:textSize="15sp"
               android:textStyle="bold"
               android:paddingLeft="15dp"
@@ -166,7 +163,6 @@
                 android:id="@+id/filterNegativeBtn"
                 android:layout_weight="1"
                 android:text="Clear"
-
                 android:background="@android:color/transparent"
                 android:textAllCaps="false"
                 android:layout_width="0dp"
@@ -179,13 +175,11 @@
 
         <Button
                 android:id="@+id/filterpositiveBtn"
-
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:background="@android:color/transparent"
                 android:text="OK"
                 android:foreground="?android:attr/selectableItemBackground"
-
                 android:layout_height="wrap_content"/>
 
 

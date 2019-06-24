@@ -22,9 +22,6 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
     lateinit var hotel : HotelAmenities
     lateinit var filterHotelClass : HotelAmenities
 
-
-
-
     override fun onBindViewHolder(p0: MyViewHolder, position: Int) {
         val place: TripDetails = tripDetails[position]
         for(index in HotelAmenities.Supplier.hotelAmenities)
@@ -38,7 +35,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
              && (price=="0" || (price=="1" && place.price.toDouble()<10000.toDouble()) || (price=="2" && place.price.toDouble()>10000.toDouble() && place.price.toDouble()<15000.toDouble()) || (price=="3" && place.price.toDouble()>15000.toDouble() && place.price.toDouble()<20000.toDouble())|| (price=="4" && place.price.toDouble()>20000.toDouble() && place.price.toDouble()<30000.toDouble()) || (price=="5" && place.price.toDouble()>30000.toDouble()))
              &&(rating=="0"||(rating=="1" && place.reviews>=1.toDouble()) || (rating=="2" && place.reviews.toInt()>=2) || (rating=="3" && place.reviews>=3.toDouble()) || (rating=="4" && place.reviews>=4.toDouble()))
              &&(hotelClass=="0" || ( filterHotelClass.starType==(hotelClass.toInt()+1)))
-             &&(dietType=="0" ||(dietType=="1" && place.diet=="veg")||(dietType=="2" && place.diet=="non-veg")||(dietType=="3" && place.diet=="both"))
+             &&(dietType=="0" ||(dietType=="1" && place.diet=="Pure Veg")||(dietType=="2" && place.diet=="non-veg")||(dietType=="3" && place.diet=="both"))
          )
         {
 
@@ -58,7 +55,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
         }
         if(position == tripDetails.size-1 && !isTripAvailable )
         {
-            Toast.makeText(context,"No $type is available",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"No results found",Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -105,7 +102,6 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
             else
             {
                 itemView.starType.visibility=View.GONE
-
             }
             if(type=="Hotel") {
                 itemView.rupee.maxHeight = 24
@@ -131,8 +127,5 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
         }
 
     }
-
-
-
 }
 

@@ -11,6 +11,7 @@ import com.example.trip.fragments.DisplayDescriptionFragment
 import com.example.trip.fragments.UserPreferenceSelectionFragment
 import com.example.trip.models.ListOfTrendingPlaces
 import com.example.trip.models.SpotDetails
+import com.example.trip.models.TripDetails
 
 class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterListener, RecyclerAdapterListener,DisplayFullImageListener {
 
@@ -30,11 +31,11 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+
         displayDescriptionFragment = DisplayDescriptionFragment()
         if (intent.hasExtra("position")) {
             cityName = intent.getStringExtra("cityName")
             hasIndex = true
-            getSupportActionBar()!!.title = cityName
             onTrendingPlaceViewClicked(intent.getStringExtra("position"))
         } else {
             spotDetails = SpotDetails()
@@ -42,7 +43,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
             val intent: Intent = intent
             cityName = intent.getStringExtra("cityName")
             type = intent.getStringExtra("type")
-            getSupportActionBar()!!.title = cityName
+
             spotDetails.cityName = cityName
             spotDetails.type = type
             var flag = 0
@@ -54,7 +55,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
             if (flag == 0) {
                 ListOfTrendingPlaces.Supplier.recentSearches.add(0, ListOfTrendingPlaces(cityName))
             }
-            userPreferenceSelectionFragment.changeData(spotDetails)
+            userPreferenceSelectionFragment.changeData(spotDetails,cityName)
             setFragment(userPreferenceSelectionFragment)
         }
 
@@ -80,6 +81,8 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
     }
 
     override fun onTrendingPlaceViewClicked(position: String) {
+        getSupportActionBar()!!.title = TripDetails.Supplier.tripDetails[position.toInt()].tripName
+
         displayDescriptionFragment.positionNumber(position)
 
         fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -104,8 +107,8 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
         val intent : Intent = Intent(this,FullScreenActivity::class.java)
         intent.putExtra("position",position)
         intent.putExtra("tripPosition",tripPosition)
-        startActivity(intent)    }
-
+        startActivity(intent)
+    }
 
 
 }

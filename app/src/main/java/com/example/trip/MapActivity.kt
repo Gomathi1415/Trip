@@ -68,7 +68,6 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
     }
 
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -114,7 +113,6 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
                     index, latlong.type
                 )
 
-
             }
 //
             index++
@@ -153,7 +151,6 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
                             } else {
                                 val manager = supportFragmentManager
                                 val dialog= AlertFragment()
-//
                                 dialog.show(manager, "customDialog")
                             }
                         }

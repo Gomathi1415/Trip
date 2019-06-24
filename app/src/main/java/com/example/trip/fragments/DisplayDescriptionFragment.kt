@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-
 import com.example.trip.R
 import com.example.trip.models.TripDetails
 import com.google.android.gms.maps.*
@@ -14,21 +13,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
-import android.graphics.Matrix
 import android.net.Uri
-import android.util.Log
+import android.support.v7.widget.Toolbar
 import android.view.*
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.trip.DisplayFullImageListener
 import com.example.trip.adapter.DescriptionViewPagerAdapter
-import com.example.trip.adapter.ViewPagerAdapter
 import com.example.trip.models.HotelAmenities
-import kotlinx.android.synthetic.main.explore_fragment.*
+import android.support.v7.app.AppCompatActivity
 
 
-class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullImageListener {
 
+
+class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullImageListener {
 
     lateinit var mGoogleMap: GoogleMap
     lateinit var mMapView: MapView
@@ -38,39 +35,37 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
     lateinit var long: String
     lateinit var hotel: HotelAmenities
     var position: Int = 0
-    var imagePosition:Int=0
-    lateinit var displayFullImageListener :DisplayFullImageListener
+    var imagePosition: Int = 0
+    lateinit var displayFullImageListener: DisplayFullImageListener
     lateinit var adapter: DescriptionViewPagerAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.display_description_fragment, container, false)
-
         return mView
     }
 
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-        val place = TripDetails.Supplier.tripDetails[position]
 
-        adapter = DescriptionViewPagerAdapter(context!!,place.imagess,this)
+        val place = TripDetails.Supplier.tripDetails[position]
+        adapter = DescriptionViewPagerAdapter(context!!, place.imagess, this,1)
         descViewpager.adapter = adapter
         descViewpager.setCurrentItem(0)
         imagePosition = 0
-        val previousLayout : LinearLayout = activity!!.findViewById(R.id.prevLay) as LinearLayout
-        val nextLayout : LinearLayout = activity!!.findViewById(R.id.nextLay) as LinearLayout
+        val previousLayout: LinearLayout = activity!!.findViewById(R.id.prevLay) as LinearLayout
+        val nextLayout: LinearLayout = activity!!.findViewById(R.id.nextLay) as LinearLayout
         next.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem()+1,true)
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem() + 1, true)
         }
         nextLayout.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem()+1,true)
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem() + 1, true)
         }
         previousLayout.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem()-1,true)
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem() - 1, true)
 
         }
         previous.setOnClickListener {
-
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem()-1,true)
+            descViewpager.setCurrentItem(descViewpager.getCurrentItem() - 1, true)
         }
 
         setHasOptionsMenu(true)
@@ -80,12 +75,10 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
         setHasOptionsMenu(false)
         webSite.setText(place.websites)
 
-
         if (place.type == "Hotel") {
             price.setText("Price per night -  ${place.price}/-")
         } else {
             price.visibility = View.GONE
-
         }
 
         if (place.phone_no != "") {
@@ -135,7 +128,9 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
             if (hotel.pool) {
                 pool.visibility = View.VISIBLE
             }
-        } else {
+        }
+        else
+        {
             hotelAmenities.visibility = View.GONE
         }
         finalAddress.setOnClickListener {
@@ -144,7 +139,6 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
                 Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}")
             )
             startActivity(intent)
-
         }
         webSite.setOnClickListener {
             val intent = Intent(android.content.Intent.ACTION_VIEW)
@@ -157,16 +151,14 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
         long = place.longitude
         val fab: FloatingActionButton = activity!!.findViewById<View>(R.id.mapButton) as FloatingActionButton
         fab.visibility = View.INVISIBLE
-
-
         super.onActivityCreated(savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar!!.setTitle(place.tripName)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu!!.clear()
-
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -175,13 +167,11 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
         mMapView.onCreate(null)
         mMapView.onResume()
         mMapView.getMapAsync(this)
-
     }
 
 
     fun positionNumber(position: String) {
         this.position = position.toInt()
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -196,28 +186,23 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback,DisplayFullIma
         mGoogleMap.uiSettings.isZoomControlsEnabled = true
         mGoogleMap.uiSettings.isScrollGesturesEnabled = true
         mGoogleMap.uiSettings.isZoomGesturesEnabled = true
-
     }
-    override fun openImage(imagePosition: String, tripPosition: String) {
-         this.imagePosition=imagePosition.toInt()
-        displayFullImageListener = activity as DisplayFullImageListener
-        displayFullImageListener.openImage(imagePosition,position.toString())
 
+    override fun openImage(imagePosition: String, tripPosition: String) {
+        this.imagePosition = imagePosition.toInt()
+        displayFullImageListener = activity as DisplayFullImageListener
+        displayFullImageListener.openImage(imagePosition, position.toString())
     }
 
     override fun onResume() {
         super.onResume()
-        if(imagePosition!=0)
-        {
+        if (imagePosition != 0) {
             descViewpager.setCurrentItem(imagePosition)
-        }
-        else {
+        } else {
             descViewpager.setCurrentItem(0)
         }
     }
-
-
-    }
+}
 
 
 

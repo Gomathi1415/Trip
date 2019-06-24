@@ -8,21 +8,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import com.example.trip.fragments.DisplaysCityNameFragment
 
-
 class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterListener{
-    override fun openMapListener(string: String) {
-        val intent  =Intent(this, MapActivity::class.java)
-        intent.putExtra("nearByType",string)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
-    }
-
 
     lateinit var type : String
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.displays_city_name_activity)
@@ -54,4 +42,13 @@ class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterL
         finish()
 
     }
+    override fun openMapListener(string: String) {
+        val intent  =Intent(this, MapActivity::class.java)
+        intent.putExtra("nearByType",string)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
 }
