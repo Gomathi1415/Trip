@@ -88,7 +88,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 this.name = place.tripName
                 this.currPosition = pos
                 itemView.typeImage.setImageResource(place.imagess[0])
-            itemView.review.text = place.reviews.toString()
+            itemView.review.text = place.reviews.toString()+" - "+place.noOfPeopleReviewed
             if(place.type=="Restaurant")
             {
                 itemView.starType.visibility=View.VISIBLE
@@ -119,9 +119,11 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 }
                 if (hotel.starType > 0) {
                     itemView.starType.visibility = View.VISIBLE
-                    itemView.starType.setText(hotel.starType.toString() + "-star hotel")
+                    itemView.star.visibility=View.VISIBLE
+                    itemView.starType.setText(hotel.starType.toString())
                 } else {
                     itemView.starType.visibility = View.GONE
+                    itemView.star.visibility=View.GONE
                 }
             }
         }

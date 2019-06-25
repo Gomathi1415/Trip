@@ -21,7 +21,7 @@ class FullScreenActivity : AppCompatActivity() {
 
         position = intent.getStringExtra("position").toInt()
         tripPosition =intent.getStringExtra("tripPosition").toInt()
-        getSupportActionBar()!!.title = TripDetails.Supplier.tripDetails[tripPosition].tripName
+//        getSupportActionBar()!!.title = TripDetails.Supplier.tripDetails[tripPosition].tripName
         val  fullViewFragment = FullViewFragment()
         val fragmentTransaction : FragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentScreen,fullViewFragment)

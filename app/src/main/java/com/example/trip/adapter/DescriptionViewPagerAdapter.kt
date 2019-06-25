@@ -30,15 +30,23 @@ class DescriptionViewPagerAdapter(var context: Context, var images: MutableList<
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         if(id==1) {
              itemView = inflater.inflate(R.layout.desc_view_pager_item, null)
+            val image: ImageView
+            image = itemView.findViewById(R.id.FullbackImageView) as ImageView
+            image.setImageResource(images[position])
+            image.setScaleType(ImageView.ScaleType.FIT_XY);
+            container.addView(itemView, 0)
+
         }else
         {
             itemView = inflater.inflate(R.layout.full_screen_view_pager, null)
+            val image: ImageView
+            image = itemView.findViewById(R.id.FullbackImageView) as ImageView
+            image.setImageResource(images[position])
+
+            container.addView(itemView, 0)
 
         }
-        val image: ImageView
-        image = itemView.findViewById(R.id.FullbackImageView) as ImageView
-        image.setBackgroundResource(images[position])
-        container.addView(itemView, 0)
+
         itemView.setOnClickListener {
           listener.openImage(position.toString(),"")
 

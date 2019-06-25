@@ -14,13 +14,15 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.widget.Toolbar
 import android.view.*
-import android.widget.LinearLayout
 import com.example.trip.DisplayFullImageListener
 import com.example.trip.adapter.DescriptionViewPagerAdapter
 import com.example.trip.models.HotelAmenities
 import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.explore_fragment.*
+import android.text.style.UnderlineSpan
+import android.text.SpannableString
+
 
 
 
@@ -50,30 +52,21 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
         val place = TripDetails.Supplier.tripDetails[position]
         adapter = DescriptionViewPagerAdapter(context!!, place.imagess, this,1)
         descViewpager.adapter = adapter
+        descIndicator.setupWithViewPager(descViewpager, true)
+
         descViewpager.setCurrentItem(0)
         imagePosition = 0
-        val previousLayout: LinearLayout = activity!!.findViewById(R.id.prevLay) as LinearLayout
-        val nextLayout: LinearLayout = activity!!.findViewById(R.id.nextLay) as LinearLayout
-        next.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem() + 1, true)
-        }
-        nextLayout.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem() + 1, true)
-        }
-        previousLayout.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem() - 1, true)
-
-        }
-        previous.setOnClickListener {
-            descViewpager.setCurrentItem(descViewpager.getCurrentItem() - 1, true)
-        }
 
         setHasOptionsMenu(true)
         nameOfTheTrip.setText(place.tripName)
         finalDecription.setText(place.description)
-        finalAddress.setText(place.address)
+        var content = SpannableString(place.address)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        finalAddress.setText(content)
         setHasOptionsMenu(false)
-        webSite.setText(place.websites)
+        content = SpannableString(place.websites)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        webSite.setText(content)
 
         if (place.type == "Hotel") {
             price.setText("Price per night -  ${place.price}/-")
@@ -82,9 +75,15 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
         }
 
         if (place.phone_no != "") {
+            content = SpannableString(place.phone_no)
+            content.setSpan(UnderlineSpan(), 0, content.length, 0)
+            phoneNumber.setText(content)
             phoneIcon.setImageResource(R.drawable.phone)
-            phoneNumber.setText(place.phone_no)
             phoneNumber.setOnClickListener {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.phone_no.trim()))
+                startActivity(intent)
+            }
+            phoneIcon.setOnClickListener {
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.phone_no.trim()))
                 startActivity(intent)
             }
@@ -133,11 +132,25 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
         {
             hotelAmenities.visibility = View.GONE
         }
+
         finalAddress.setOnClickListener {
             val intent = Intent(
                 android.content.Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}")
             )
+            startActivity(intent)
+        }
+        adressIcon.setOnClickListener {
+            val intent = Intent(
+                android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?&daddr=${place.latitude},${place.longitude}")
+            )
+            startActivity(intent)
+
+        }
+        websiteIcon.setOnClickListener {
+            val intent = Intent(android.content.Intent.ACTION_VIEW)
+            intent.setData(Uri.parse(place.websites))
             startActivity(intent)
         }
         webSite.setOnClickListener {

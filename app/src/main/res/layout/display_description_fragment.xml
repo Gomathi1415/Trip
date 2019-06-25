@@ -1,17 +1,19 @@
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:padding="8dp"
         android:layout_width="match_parent">
-    
+
     <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical"
     >
+
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/nameOfTheTrip"
                   android:text="Title"
@@ -20,61 +22,36 @@
                   android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                   android:textColor="#0D0D0D"
                   android:textStyle="bold"/>
-        <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="300dp"
-                        android:id="@+id/rel">
 
-        <android.support.v4.view.ViewPager
-                android:id="@+id/descViewpager"
+        <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="300dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="2dp" />
+                android:id="@+id/rel">
 
-
-            <LinearLayout
-                    android:id="@+id/prevLay"
-                    android:layout_width="wrap_content"
+            <android.support.v4.view.ViewPager
+                    android:id="@+id/descViewpager"
+                    android:layout_width="fill_parent"
                     android:layout_height="300dp"
-            >
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="2dp">
 
-                <Button
-                        android:id="@+id/previous"
-                        android:layout_width="30dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="130dp"
-                        android:background="@drawable/next" />
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp"
-                    android:id="@+id/nextLay"
-                    android:layout_alignParentRight="true"
-            >
-
-                <Button
-                        android:id="@+id/next"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="130dp"
-                        android:background="@drawable/previous"
-                />
-
-
-            </LinearLayout>
+            </android.support.v4.view.ViewPager>
+            <android.support.design.widget.TabLayout
+                    android:id="@+id/descIndicator"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabBackground="@drawable/indicator"
+                    app:tabGravity="center"
+                    app:tabIndicatorGravity="bottom"
+                    app:tabIndicatorHeight="0dp"/>
         </RelativeLayout>
 
         <TextView android:layout_width="wrap_content"
-                  android:layout_margin="5dp"
                   android:text="ABOUT"
+                  android:layout_marginTop="10dp"
                   android:layout_height="wrap_content"
                   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                   android:textStyle="bold"
@@ -84,7 +61,7 @@
                   android:id="@+id/finalDecription"
                   android:text="here's Come Description..."
                   android:textColor="#838282"
-                  android:layout_margin="5dp"
+                  android:layout_margin="4dp"
                   android:layout_height="wrap_content"
                   android:textSize="16dp"
                   android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
@@ -106,20 +83,20 @@
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
                       android:orientation="vertical"
+                      android:layout_marginTop="10dp"
                       android:layout_height="wrap_content">
             <LinearLayout android:layout_width="match_parent"
                           android:orientation="horizontal"
-                          android:layout_marginTop="10dp"
-
                           android:layout_height="wrap_content">
 
                 <ImageView android:layout_width="wrap_content"
-                           android:layout_margin="10dp"
+                           android:padding="5dp"
+                           android:id="@+id/adressIcon"
                            android:src="@drawable/location_pin"
                            android:layout_height="wrap_content"/>
                 <TextView android:layout_width="wrap_content"
                           android:id="@+id/finalAddress"
-                          android:layout_margin="10dp"
+                          android:padding="5dp"
                           android:textIsSelectable="true"
                           android:text="here's Come Address..."
                           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -129,33 +106,33 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content">
                 <ImageView android:layout_width="wrap_content"
-                           android:layout_margin="10dp"
                            android:id="@+id/phoneIcon"
+                           android:padding="5dp"
                            android:layout_height="wrap_content"/>
                 <TextView android:layout_width="wrap_content"
                           android:id="@+id/phoneNumber"
+                          android:padding="5dp"
                           android:textIsSelectable="true"
-                          android:layout_margin="10dp"
                           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                           android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_marginTop="10dp"
                       android:orientation="horizontal">
-            <ImageView android:layout_width="22dp"
-                       android:layout_height="22dp"
-                       android:layout_margin="10dp"
-                       android:src="@drawable/worldwide"
+
+            <ImageView android:layout_width="wrap_content"
+                       android:padding="5dp"
+                       android:id="@+id/websiteIcon"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/world_wide"
             />
             <TextView android:layout_width="wrap_content"
                       android:id="@+id/webSite"
                       android:textIsSelectable="true"
-                      android:layout_margin="10dp"
+                      android:padding="5dp"
                       android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                       android:layout_height="wrap_content"/>
 
@@ -190,7 +167,7 @@
                           android:orientation="horizontal"
                           android:id="@+id/room_service"
                           android:visibility="gone"
-                         >
+            >
                 <ImageView android:layout_width="22dp"
                            android:layout_height="22dp"
                            android:layout_margin="10dp"
@@ -207,7 +184,7 @@
                           android:orientation="horizontal"
                           android:visibility="gone"
                           android:id="@+id/parking"
-                         >
+            >
                 <ImageView android:layout_width="22dp"
                            android:layout_height="22dp"
                            android:layout_margin="10dp"
@@ -230,7 +207,7 @@
                            android:src="@drawable/restaurant_black"
                 />
                 <TextView android:layout_width="wrap_content"
-                         android:text="Restaurant"
+                          android:text="Restaurant"
                           android:layout_margin="10dp"
                           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                           android:layout_height="wrap_content"/>
@@ -326,7 +303,7 @@
                            android:src="@drawable/gym"
                 />
                 <TextView android:layout_width="wrap_content"
-                         android:text="Fitness Centre with Gym / Workout Room"
+                          android:text="Fitness Centre with Gym / Workout Room"
                           android:layout_margin="10dp"
                           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                           android:layout_height="wrap_content"/>
