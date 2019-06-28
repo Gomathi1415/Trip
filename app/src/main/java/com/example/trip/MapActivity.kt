@@ -4,8 +4,11 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.location.LocationManager
 import android.support.v7.app.AppCompatActivity
@@ -16,7 +19,9 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.trip.DAO.ImageDAO
 import com.example.trip.fragments.AlertFragment
+import com.example.trip.models.Images
 import com.example.trip.models.TripDetails
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -29,6 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.*
+import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.view.*
 
 class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertCommunicator{
 
@@ -336,6 +342,8 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
         override fun getInfoContents(marker: Marker): View? {
             position = marker.snippet
+            var imageDAO : ImageDAO = ImageDAO()
+
             val place = TripDetails.Supplier.tripDetails[position.toInt()]
             val typeImage : ImageView = myContentsView.findViewById(R.id.typeImage) as ImageView
             val name : TextView = myContentsView.findViewById(R.id.name) as TextView
@@ -345,11 +353,15 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
             val rupee : ImageView = myContentsView.findViewById(R.id.rupee) as ImageView
             val price : TextView = myContentsView.findViewById(R.id.price) as TextView
 
-            typeImage.setImageResource(place.imagess[0])
+            imageDAO.getTripImage(place.id)
+            val data:ByteArray = Images.Supplier.tripImage[0].images
+            val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
+            var drawable  : Drawable =  BitmapDrawable(Resources.getSystem(),bmp)
+            typeImage.typeImage.setImageDrawable(drawable)
+
             name.setText(place.tripName)
             address.setText(place.address)
-
-            review.setText(place.reviews.toString())
+            review.setText(place.reviews)
             description.setText(place.description)
             if(place.type=="Hotel") {
                 rupee.maxHeight=24

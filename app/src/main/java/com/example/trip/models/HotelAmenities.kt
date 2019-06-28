@@ -1,23 +1,50 @@
 package com.example.trip.models
 
 
+class HotelAmenities {
+    lateinit var hotelName: String
+    lateinit var roomService: String
+    lateinit var freeParking: String
+    lateinit var restaurant: String
+    lateinit var freeWiFi: String
+    lateinit var breakfastIncluded: String
+    lateinit var pool: String
+    lateinit var bar: String
+    lateinit var gym: String
+    lateinit var spa: String
+    lateinit var starType: String
 
-data class HotelAmenities(var hotelName: String,var roomService : Boolean,var freeParking :Boolean,var restaurant :Boolean,var freeWiFi:Boolean,var breakfastIncluded : Boolean,var pool : Boolean,var bar : Boolean,var gym : Boolean,var spa : Boolean,var starType  :Int) {
+
+    constructor(
+        hotelName: String,
+        roomService: String,
+        freeParking: String,
+        restaurant: String,
+        freeWiFi: String,
+        breakfastIncluded: String,
+        pool: String,
+        bar: String,
+        gym: String,
+        spa: String,
+        starType: String
+
+    ) {
+        this.hotelName = hotelName
+        this.roomService = roomService
+
+        this.freeParking = freeParking
+        this.restaurant = restaurant
+        this.freeWiFi = freeWiFi
+        this.breakfastIncluded = breakfastIncluded
+        this.pool = pool
+        this.bar = bar
+        this.gym = gym
+        this.spa = spa
+        this.starType = starType
+    }
+
+    constructor() {}
     object Supplier {
-        val hotelAmenities = mutableListOf<HotelAmenities>(
-            HotelAmenities("The Oberoi",true,true,true,true,false,false,true,true,true,5),
-            HotelAmenities("Palm Meadows Club",true,true,true,true,true,true,true,true,true,4),
-            HotelAmenities("Radisson",true,true,true,true,true,true,true,true,true,5),
-            HotelAmenities("Savera Hotel",true,true,true,true,true,true,true,true,true,4),
-            HotelAmenities("GreenPark",true,true,true,true,true,true,true,true,true,4),
-            HotelAmenities("Parakkat Nature Hotels & Resorts",true,true,true,true,true,false,false,false,true,4),
-            HotelAmenities("Hotel Great Jubilee",true,true,true,true,true,false,false,false,true,3),
-            HotelAmenities("TGI Star Holidays Yercaud",true,true,true,false,true,true,false,false,true,3),
-            HotelAmenities("Sinclairs Retreat",true,true,true,true,true,false,true,true,false,3),
-            HotelAmenities("Amaana Plantation Resort",true,true,true,true,true,false,false,false,false,0),
-            HotelAmenities("Swiss County",true,true,true,true,true,false,false,false,false,3),
-            HotelAmenities("Sterling Kodai Valley",true,true,false,true,true,false,false,false,false,3)
-
-        )
+        val hotelAmenities = mutableListOf<HotelAmenities>()
     }
 }

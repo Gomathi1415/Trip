@@ -5,9 +5,11 @@
               android:background="#000000"
               xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/FullbackImageView"
             android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:minHeight="300dp"
             />
 
 

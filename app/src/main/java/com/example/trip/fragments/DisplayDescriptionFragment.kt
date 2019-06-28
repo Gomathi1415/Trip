@@ -22,9 +22,8 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.explore_fragment.*
 import android.text.style.UnderlineSpan
 import android.text.SpannableString
-
-
-
+import com.example.trip.DAO.ImageDAO
+import com.example.trip.models.Images
 
 
 class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullImageListener {
@@ -35,6 +34,8 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
     lateinit var lat: String
     lateinit var tripName: String
     lateinit var long: String
+    var imageDAO: ImageDAO = ImageDAO()
+
     lateinit var hotel: HotelAmenities
     var position: Int = 0
     var imagePosition: Int = 0
@@ -50,7 +51,9 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
 
 
         val place = TripDetails.Supplier.tripDetails[position]
-        adapter = DescriptionViewPagerAdapter(context!!, place.imagess, this,1)
+        imageDAO.getTripImage(place.id)
+
+        adapter = DescriptionViewPagerAdapter(context!!, Images.Supplier.tripImage, this,1)
         descViewpager.adapter = adapter
         descIndicator.setupWithViewPager(descViewpager, true)
 
@@ -64,7 +67,7 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         finalAddress.setText(content)
         setHasOptionsMenu(false)
-        content = SpannableString(place.websites)
+        content = SpannableString(place.website)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         webSite.setText(content)
 
@@ -100,31 +103,31 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
             }
             Damenities.setText("Amenities")
 
-            if (hotel.roomService) {
+            if (hotel.roomService=="true") {
                 room_service.visibility = View.VISIBLE
             }
-            if (hotel.bar) {
+            if (hotel.bar=="true") {
                 bar.visibility = View.VISIBLE
             }
-            if (hotel.freeParking) {
+            if (hotel.freeParking.toBoolean()) {
                 parking.visibility = View.VISIBLE
             }
-            if (hotel.spa) {
+            if (hotel.spa.toBoolean()) {
                 spa.visibility = View.VISIBLE
             }
-            if (hotel.gym) {
+            if (hotel.gym.toBoolean()) {
                 gym.visibility = View.VISIBLE
             }
-            if (hotel.breakfastIncluded) {
+            if (hotel.breakfastIncluded.toBoolean()) {
                 breakfast.visibility = View.VISIBLE
             }
-            if (hotel.freeWiFi) {
+            if (hotel.freeWiFi.toBoolean()) {
                 wifi.visibility = View.VISIBLE
             }
-            if (hotel.restaurant) {
+            if (hotel.restaurant.toBoolean()) {
                 restAvailable.visibility = View.VISIBLE
             }
-            if (hotel.pool) {
+            if (hotel.pool.toBoolean()) {
                 pool.visibility = View.VISIBLE
             }
         }
@@ -150,12 +153,12 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
         }
         websiteIcon.setOnClickListener {
             val intent = Intent(android.content.Intent.ACTION_VIEW)
-            intent.setData(Uri.parse(place.websites))
+            intent.setData(Uri.parse(place.website))
             startActivity(intent)
         }
         webSite.setOnClickListener {
             val intent = Intent(android.content.Intent.ACTION_VIEW)
-            intent.setData(Uri.parse(place.websites))
+            intent.setData(Uri.parse(place.website))
             startActivity(intent)
         }
 

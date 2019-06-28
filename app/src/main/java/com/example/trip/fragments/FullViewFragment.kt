@@ -8,6 +8,7 @@ import android.view.*
 import com.example.trip.DisplayFullImageListener
 import com.example.trip.R
 import com.example.trip.adapter.DescriptionViewPagerAdapter
+import com.example.trip.models.Images
 import com.example.trip.models.TripDetails
 
 
@@ -21,7 +22,7 @@ class FullViewFragment :Fragment(),DisplayFullImageListener{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view =inflater.inflate(R.layout.full_view_fragment,container,false)
         val images = TripDetails.Supplier.tripDetails[tripPosition]
-        adapter = DescriptionViewPagerAdapter(context!!,images.imagess,this,2)
+        adapter = DescriptionViewPagerAdapter(context!!,Images.Supplier.tripImage,this,2)
         var fullviewpager = view.findViewById<ViewPager>(R.id.fullviewpager) as ViewPager
         fullviewpager.adapter = adapter
         fullviewpager.setCurrentItem(currentPosition,true)
