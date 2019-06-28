@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
         android:padding="8dp"
         android:layout_width="match_parent">
@@ -17,6 +17,7 @@
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/nameOfTheTrip"
                   android:text="Title"
+                  android:layout_marginEnd="5dp"
                   android:textIsSelectable="true"
                   android:layout_height="wrap_content"
                   android:textAppearance="@style/TextAppearance.AppCompat.Display1"
