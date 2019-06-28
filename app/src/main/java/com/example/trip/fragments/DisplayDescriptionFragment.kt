@@ -77,7 +77,7 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
             price.visibility = View.GONE
         }
 
-        if (place.phone_no != "") {
+        if (place.phone_no != " ") {
             content = SpannableString(place.phone_no)
             content.setSpan(UnderlineSpan(), 0, content.length, 0)
             phoneNumber.setText(content)

@@ -3,6 +3,7 @@ package com.example.trip
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -16,15 +17,16 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.trip.DAO.ImageDAO
-import com.example.trip.fragments.AlertFragment
 import com.example.trip.models.Images
 import com.example.trip.models.TripDetails
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResultCallback
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.tasks.Task
@@ -33,10 +35,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
-import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.*
 import kotlinx.android.synthetic.main.list_of_available_trip_detail_card_view.view.*
 
-class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertCommunicator{
+class MapActivity : AppCompatActivity(),OnMapReadyCallback{
 
     private var mLocationPermissionsGranted: Boolean = false
     private lateinit var mMap: GoogleMap
@@ -53,6 +54,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
     lateinit var type: String
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var position: String
+    var isCancelIsPressed  :Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,15 +153,12 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
                                 nearBy()
                             }
 
-                        } else {
-                            if (isLocationEnabled()) {
+                        } else if (isLocationEnabled()) {
                                 getDeviceLocation()
                             } else {
-                                val manager = supportFragmentManager
-                                val dialog= AlertFragment()
-                                dialog.show(manager, "customDialog")
+                                onDialogMessege(applicationContext)
+
                             }
-                        }
                     }
 
                 })
@@ -311,9 +310,10 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
     }
 
 
-    override fun onDialogMessege(message: Boolean) {
-        if (message) {
-            startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1)
+    fun onDialogMessege(context: Context) {
+        if (!isCancelIsPressed) {
+            isCancelIsPressed=true
+            displayLocationSettingsRequest(applicationContext)
 
         } else {
             onBackPressed()
@@ -380,6 +380,49 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback, AlertFragment.AlertC
 
             return myContentsView
         }
+    }
+    private fun displayLocationSettingsRequest(context: Context) {
+        val googleApiClient = GoogleApiClient.Builder(context)
+            .addApi(LocationServices.API).build()
+        googleApiClient.connect()
+
+        val locationRequest = LocationRequest.create()
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        locationRequest.setInterval(10000)
+        locationRequest.setFastestInterval(10000 / 2)
+
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+
+        val result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback(object : ResultCallback<LocationSettingsResult> {
+            override fun onResult(result: LocationSettingsResult) {
+                val status = result.getStatus()
+                when (status.getStatusCode()) {
+                    LocationSettingsStatusCodes.SUCCESS -> Log.i("map", "All location settings are satisfied.")
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                        Log.i(
+                            "map",
+                            "Location settings are not satisfied. Show the user a dialog to upgrade location settings "
+                        )
+
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result
+                            // in onActivityResult().
+                            val REQUEST_CHECK_SETTINGS = 0x1
+                            status.startResolutionForResult(this@MapActivity, REQUEST_CHECK_SETTINGS)
+                        } catch (e: IntentSender.SendIntentException) {
+                            Log.i("map", "PendingIntent unable to execute request.")
+                        }
+
+                    }
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> Log.i(
+                        "map",
+                        "Location settings are inadequate, and cannot be fixed here. Dialog not created."
+                    )
+                }
+            }
+        })
     }
 
 }

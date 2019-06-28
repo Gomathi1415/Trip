@@ -35,9 +35,9 @@ class Database(context: Context, createTable: String, dropTable: String) :
     }
 
     companion object {
-        private val ASSET_PATH = "database.db"
+        private val ASSET_PATH = "TripDatabase.db"
         private val TAG: String = "DatabaseHelper"
-        val DATABASENAME = "database.db"
+        val DATABASENAME = "TripDatabase.db"
         val VERSION = 1
     }
     @Throws(IOException::class)
