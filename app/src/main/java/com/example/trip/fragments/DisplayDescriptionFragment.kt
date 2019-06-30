@@ -14,16 +14,22 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.display_description_fragment.*
 import android.content.Intent
 import android.net.Uri
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CollapsingToolbarLayout
 import android.view.*
 import com.example.trip.DisplayFullImageListener
 import com.example.trip.adapter.DescriptionViewPagerAdapter
 import com.example.trip.models.HotelAmenities
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import kotlinx.android.synthetic.main.explore_fragment.*
 import android.text.style.UnderlineSpan
 import android.text.SpannableString
+import android.util.Log
+import android.widget.Toast
 import com.example.trip.DAO.ImageDAO
 import com.example.trip.models.Images
+import kotlinx.android.synthetic.main.trending_place_card_view.*
 
 
 class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullImageListener {
@@ -34,10 +40,10 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
     lateinit var lat: String
     lateinit var tripName: String
     lateinit var long: String
-    var imageDAO: ImageDAO = ImageDAO()
-
     lateinit var hotel: HotelAmenities
     var position: Int = 0
+    var imageDAO: ImageDAO = ImageDAO()
+
     var imagePosition: Int = 0
     lateinit var displayFullImageListener: DisplayFullImageListener
     lateinit var adapter: DescriptionViewPagerAdapter
@@ -49,19 +55,46 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-
+//        var ActtoolBar : Toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
         val place = TripDetails.Supplier.tripDetails[position]
+        var toolBar : Toolbar = activity!!.findViewById(R.id.descToolBar) as Toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolBar)
+        if((activity as AppCompatActivity).supportActionBar!=null)
+        {
+            (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
+        val collapsingToolbarLayout :CollapsingToolbarLayout= activity!!.findViewById(R.id.collapsingToolbarLayout) as CollapsingToolbarLayout
+        var appBarLayout = activity!!.findViewById(R.id.app_bar_layout) as AppBarLayout
+        appBarLayout.addOnOffsetChangedListener(object : AppBarLayout. OnOffsetChangedListener {
+            override fun onOffsetChanged(p0: AppBarLayout?, p1: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                }
+                if (scrollRange + p1 == 0) {
+                    collapsingToolbarLayout.title =place.tripName
+                    isShow = true
+                } else if (isShow) {
+                    collapsingToolbarLayout.title =
+                        " "
+                    isShow = false
+                }
+            }
+            var isShow = true
+            var scrollRange = -1
+        })
+
+
+
         imageDAO.getTripImage(place.id)
 
         adapter = DescriptionViewPagerAdapter(context!!, Images.Supplier.tripImage, this,1)
         descViewpager.adapter = adapter
         descIndicator.setupWithViewPager(descViewpager, true)
-
         descViewpager.setCurrentItem(0)
         imagePosition = 0
 
         setHasOptionsMenu(true)
-        nameOfTheTrip.setText(place.tripName)
+        nameOfTheTrip.text=place.tripName
         finalDecription.setText(place.description)
         var content = SpannableString(place.address)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
@@ -70,6 +103,7 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
         content = SpannableString(place.website)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         webSite.setText(content)
+
 
         if (place.type == "Hotel") {
             price.setText("Price per night -  ${place.price}/-")
@@ -94,6 +128,7 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
             phoneIcon.visibility = View.GONE
             phoneNumber.visibility = View.GONE
         }
+        Log.d("abcd",place.tripName)
         if (place.type == "Hotel") {
 
             for (index in HotelAmenities.Supplier.hotelAmenities) {
@@ -109,25 +144,25 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
             if (hotel.bar=="true") {
                 bar.visibility = View.VISIBLE
             }
-            if (hotel.freeParking.toBoolean()) {
+            if (hotel.freeParking=="true") {
                 parking.visibility = View.VISIBLE
             }
-            if (hotel.spa.toBoolean()) {
+            if (hotel.spa=="true") {
                 spa.visibility = View.VISIBLE
             }
-            if (hotel.gym.toBoolean()) {
+            if (hotel.gym=="true") {
                 gym.visibility = View.VISIBLE
             }
-            if (hotel.breakfastIncluded.toBoolean()) {
+            if (hotel.breakfastIncluded=="true") {
                 breakfast.visibility = View.VISIBLE
             }
-            if (hotel.freeWiFi.toBoolean()) {
+            if (hotel.freeWiFi=="true") {
                 wifi.visibility = View.VISIBLE
             }
-            if (hotel.restaurant.toBoolean()) {
+            if (hotel.restaurant=="true") {
                 restAvailable.visibility = View.VISIBLE
             }
-            if (hotel.pool.toBoolean()) {
+            if (hotel.pool=="true") {
                 pool.visibility = View.VISIBLE
             }
         }
@@ -162,13 +197,14 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
             startActivity(intent)
         }
 
+
         tripName = place.tripName
         lat = place.latitude
         long = place.longitude
-        val fab: FloatingActionButton = activity!!.findViewById<View>(R.id.mapButton) as FloatingActionButton
-        fab.visibility = View.INVISIBLE
+//        val fab: FloatingActionButton = activity!!.findViewById<View>(R.id.mapButton) as FloatingActionButton
+//        fab.visibility = View.INVISIBLE
         super.onActivityCreated(savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar!!.setTitle(place.tripName)
+//        (activity as AppCompatActivity).supportActionBar!!.setTitle(place.tripName)
 
     }
 
@@ -218,6 +254,9 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
             descViewpager.setCurrentItem(0)
         }
     }
+
+
+
 }
 
 

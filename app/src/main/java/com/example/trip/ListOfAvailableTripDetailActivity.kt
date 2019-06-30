@@ -13,7 +13,7 @@ import com.example.trip.models.ListOfTrendingPlaces
 import com.example.trip.models.SpotDetails
 import com.example.trip.models.TripDetails
 
-class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterListener, RecyclerAdapterListener,DisplayFullImageListener {
+class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterListener, RecyclerAdapterListener{
 
 
 
@@ -22,7 +22,6 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
     var hasIndex: Boolean = false
     lateinit var spotDetails: SpotDetails
     lateinit var fragmentTransaction: FragmentTransaction
-    lateinit var displayDescriptionFragment: DisplayDescriptionFragment
     lateinit var userPreferenceSelectionFragment: UserPreferenceSelectionFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +31,7 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
 
-        displayDescriptionFragment = DisplayDescriptionFragment()
+
         if (intent.hasExtra("position")) {
             cityName = intent.getStringExtra("cityName")
             hasIndex = true
@@ -81,20 +80,10 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
     }
 
     override fun onTrendingPlaceViewClicked(position: String) {
-        getSupportActionBar()!!.title = TripDetails.Supplier.tripDetails[position.toInt()].tripName
-
-        displayDescriptionFragment.positionNumber(position)
-
-        fragmentTransaction = supportFragmentManager.beginTransaction()
-
-        if (hasIndex) {
-            fragmentTransaction.replace(R.id.listfragmentScreen, displayDescriptionFragment)
-                .commit()
-        } else {
-            fragmentTransaction.replace(R.id.listfragmentScreen, displayDescriptionFragment).addToBackStack(null)
-                .commit()
-
-        }
+        val intent = Intent(this,DisplayCityNameActivity::class.java)
+        intent.putExtra("position",position)
+        intent.putExtra("hasIndex",hasIndex)
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -103,12 +92,4 @@ class ListOfAvailableTripDetailActivity : AppCompatActivity(), MapViewAdapterLis
         }
         return false
     }
-    override fun openImage(position: String,tripPosition:String) {
-        val intent : Intent = Intent(this,FullScreenActivity::class.java)
-        intent.putExtra("position",position)
-        intent.putExtra("tripPosition",tripPosition)
-        startActivity(intent)
-    }
-
-
 }

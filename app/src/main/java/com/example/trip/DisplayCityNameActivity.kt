@@ -6,23 +6,51 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import com.example.trip.fragments.DisplayDescriptionFragment
 import com.example.trip.fragments.DisplaysCityNameFragment
+import com.example.trip.models.TripDetails
 
-class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterListener{
+class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterListener,DisplayFullImageListener {
 
     lateinit var type : String
+    lateinit var displayDescriptionFragment: DisplayDescriptionFragment
+    lateinit var fragmentTransaction: FragmentTransaction
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.displays_city_name_activity)
+        displayDescriptionFragment = DisplayDescriptionFragment()
 
         val intent : Intent = intent
+        if(intent.hasExtra("position"))
+        {
+            var position = intent.getStringExtra("position")
+            var hasIndex = intent.getIntExtra("hasIndex",0)
+//            getSupportActionBar()!!.title = TripDetails.Supplier.tripDetails[position.toInt()].tripName
+
+            displayDescriptionFragment.positionNumber(position)
+
+            fragmentTransaction = supportFragmentManager.beginTransaction()
+
+            if (hasIndex==1) {
+                fragmentTransaction.replace(R.id.fragmentScreen, displayDescriptionFragment)
+                    .commit()
+            } else {
+                fragmentTransaction.replace(R.id.fragmentScreen, displayDescriptionFragment)
+                    .commit()
+
+            }
+        }
+        else {
             type = intent.getStringExtra("type")
-        val displaysCityNameFragment = DisplaysCityNameFragment()
-                displaysCityNameFragment.changeData(type)
-                setFragment(displaysCityNameFragment)
+            val displaysCityNameFragment = DisplaysCityNameFragment()
+            displaysCityNameFragment.changeData(type)
+            setFragment(displaysCityNameFragment)
+        }
 
 
-}
+    }
     private fun setFragment(fragment: Fragment): Boolean {
         val fragmentTransaction : FragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentScreen,fragment).commit()
@@ -49,6 +77,16 @@ class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterL
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+    override fun openImage(position: String,tripPosition:String) {
+        val intent : Intent = Intent(this,FullScreenActivity::class.java)
+        intent.putExtra("position",position)
+        intent.putExtra("tripPosition",tripPosition)
+        startActivity(intent)
     }
 
 }

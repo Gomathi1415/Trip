@@ -196,7 +196,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback{
 
         mMap.setOnInfoWindowClickListener(OnInfoWindowClickListener {
              position = it.snippet
-            val intent = Intent(this, ListOfAvailableTripDetailActivity::class.java)
+            val intent = Intent(this, DisplayCityNameActivity::class.java)
             intent.putExtra("position", position)
             intent.putExtra("cityName",cityName)
             startActivity(intent)
