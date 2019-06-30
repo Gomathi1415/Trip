@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
         {
 
             imageDAO.getTripImage(place.id)
-
+            Log.d("tag",place.tripName)
             p0.itemView.setVisibility(View.VISIBLE)
             isTripAvailable = true
             val linearLayout = LinearLayout(context)
@@ -79,6 +80,10 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
         return tripDetails.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         lateinit var name: String
 
@@ -93,6 +98,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
         fun setData(place: TripDetails, pos: Int){
 
             itemView.name.text = place.tripName
+
                 itemView.address.text = place.address
                 itemView.description.text = place.description
                 this.name = place.tripName
@@ -124,6 +130,7 @@ class AvailableTripDetailsAdapter(val context: Context, val tripDetails : Mutabl
                 itemView.price.visibility = View.VISIBLE
                 itemView.price.text = place.price
                 itemView.rupee.setImageResource(R.drawable.rupee)
+                Log.d("tag",place.tripName+"hjhj")
 
                 for (index in HotelAmenities.Supplier.hotelAmenities) {
                     if (index.hotelName == place.tripName) {

@@ -95,6 +95,7 @@ class RestaurantsDisplayFragments : Fragment() ,RecyclerAdapterListener, Restaur
                 "0",rating,"0",dietType
             )
         availableCityRecyclerView.adapter = recyclerViewAdapter
+        recyclerViewAdapter.notifyDataSetChanged()
         setHasOptionsMenu(true)
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {

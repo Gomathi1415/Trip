@@ -95,6 +95,7 @@ class HotelsDisplayFragments : Fragment(), RecyclerAdapterListener, FilterDialog
                 price,rating,hotelClass,"0"
             )
         availableCityRecyclerView.adapter = recyclerViewAdapter
+        recyclerViewAdapter.notifyDataSetChanged()
         setHasOptionsMenu(true)
     }
 
@@ -102,7 +103,6 @@ class HotelsDisplayFragments : Fragment(), RecyclerAdapterListener, FilterDialog
         super.onActivityCreated(savedInstanceState)
         setAdaptder(filterPrice.toString(),filterRating.toString(),filterClass.toString())
     }
-
 
     override fun onDialogMessege(price: String, rating: String, hotelClass: String) {
         if (price == "Rs.10000 Below") {

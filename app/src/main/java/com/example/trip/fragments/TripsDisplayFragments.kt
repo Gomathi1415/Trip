@@ -39,6 +39,7 @@ class TripsDisplayFragments : Fragment(),RecyclerAdapterListener{
             recyclerViewAdapter =
                 AvailableTripDetailsAdapter(this.context!!, TripDetails.Supplier.tripDetails, spotDetails,"Things to do", this,"0","0","0","0")
             availableCityRecyclerView.adapter = recyclerViewAdapter
+            recyclerViewAdapter.notifyDataSetChanged()
 
             return rootView
         }
