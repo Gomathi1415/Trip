@@ -3,7 +3,6 @@ package com.example.trip.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import com.example.trip.R
 import com.example.trip.models.TripDetails
@@ -22,14 +21,11 @@ import com.example.trip.adapter.DescriptionViewPagerAdapter
 import com.example.trip.models.HotelAmenities
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import kotlinx.android.synthetic.main.explore_fragment.*
 import android.text.style.UnderlineSpan
 import android.text.SpannableString
 import android.util.Log
-import android.widget.Toast
 import com.example.trip.DAO.ImageDAO
 import com.example.trip.models.Images
-import kotlinx.android.synthetic.main.trending_place_card_view.*
 
 
 class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullImageListener {
@@ -55,7 +51,6 @@ class DisplayDescriptionFragment : Fragment(), OnMapReadyCallback, DisplayFullIm
     @SuppressLint("RestrictedApi")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-//        var ActtoolBar : Toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
         val place = TripDetails.Supplier.tripDetails[position]
         var toolBar : Toolbar = activity!!.findViewById(R.id.descToolBar) as Toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolBar)
