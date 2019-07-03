@@ -59,7 +59,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
     fun search(context : Context)
     {
         var cityAvailable :Boolean = false
-        var searchItem :SearchView = activity!!.findViewById(R.id.citySearchBar)
+        val searchItem :SearchView = activity!!.findViewById(R.id.citySearchBar)
         searchItem.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(!cityAvailable) {
@@ -70,7 +70,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 cityAvailable = false
-                var matchedCity : MutableList<ListOfTrendingPlaces> = mutableListOf()
+                val matchedCity : MutableList<ListOfTrendingPlaces> = mutableListOf()
                 if(newText.length==0){
                     recent.visibility=View.VISIBLE
                     suggest.visibility=View.GONE
@@ -85,7 +85,7 @@ class DisplaysCityNameFragment : Fragment(), RecyclerAdapterListener {
                 else
                 {
                 for(city in cityList) {
-                    var temp: String = city.toString()
+                    val temp: String = city.toString()
                     if (temp.toLowerCase().contains(newText.toLowerCase()) && newText.length != 0)
                     {
                         matchedCity.add(city)

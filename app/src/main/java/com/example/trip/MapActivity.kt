@@ -342,7 +342,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback{
 
         override fun getInfoContents(marker: Marker): View? {
             position = marker.snippet
-            var imageDAO : ImageDAO = ImageDAO()
+            val imageDAO : ImageDAO = ImageDAO()
 
             val place = TripDetails.Supplier.tripDetails[position.toInt()]
             val typeImage : ImageView = myContentsView.findViewById(R.id.typeImage) as ImageView
@@ -356,7 +356,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback{
             imageDAO.getTripImage(place.id)
             val data:ByteArray = Images.Supplier.tripImage[0].images
             val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
-            var drawable  : Drawable =  BitmapDrawable(Resources.getSystem(),bmp)
+            val drawable  : Drawable =  BitmapDrawable(Resources.getSystem(),bmp)
             typeImage.typeImage.setImageDrawable(drawable)
 
             name.setText(place.tripName)

@@ -12,7 +12,6 @@ import com.example.trip.adapter.AvailableTripDetailsAdapter
 import com.example.trip.models.SpotDetails
 import com.example.trip.models.TripDetails
 import android.widget.TextView
-import android.widget.Toast
 
 
 class HotelsDisplayFragments : Fragment(), RecyclerAdapterListener, FilterDialogFragment.FilterCommunicator {

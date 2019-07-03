@@ -4,7 +4,6 @@ package com.example.trip.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -85,12 +84,12 @@ class ExploreFragment : Fragment(), RecyclerAdapterListener {
             communicator.response("Explore Button")
         }
 
-        var adapter = GridAdapter(activity!!, userPreference, userPreferenceImage);
+        val adapter = GridAdapter(activity!!, userPreference, userPreferenceImage);
         grid = activity!!.findViewById(R.id.gridView) as GridView
         grid!!.setAdapter(adapter)
         grid!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             communicator = activity as Communicator
-            var tripType: String = userPreference[position]
+            val tripType: String = userPreference[position]
             communicator.response(tripType)
         }
 

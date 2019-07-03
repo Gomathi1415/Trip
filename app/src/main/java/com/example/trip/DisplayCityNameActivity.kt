@@ -25,8 +25,8 @@ class DisplayCityNameActivity : AppCompatActivity(),Communicator,MapViewAdapterL
         val intent : Intent = intent
         if(intent.hasExtra("position"))
         {
-            var position = intent.getStringExtra("position")
-            var hasIndex = intent.getIntExtra("hasIndex",0)
+            val position = intent.getStringExtra("position")
+            val hasIndex = intent.getIntExtra("hasIndex",0)
 //            getSupportActionBar()!!.title = TripDetails.Supplier.tripDetails[position.toInt()].tripName
 
             displayDescriptionFragment.positionNumber(position)

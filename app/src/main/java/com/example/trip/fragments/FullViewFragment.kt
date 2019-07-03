@@ -20,10 +20,10 @@ class FullViewFragment :Fragment(),DisplayFullImageListener{
     var tripPosition :Int =0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view =inflater.inflate(R.layout.full_view_fragment,container,false)
+        val view =inflater.inflate(R.layout.full_view_fragment,container,false)
         val images = TripDetails.Supplier.tripDetails[tripPosition]
         adapter = DescriptionViewPagerAdapter(context!!,Images.Supplier.tripImage,this,2)
-        var fullviewpager = view.findViewById<ViewPager>(R.id.fullviewpager) as ViewPager
+        val fullviewpager = view.findViewById<ViewPager>(R.id.fullviewpager) as ViewPager
         fullviewpager.adapter = adapter
         fullviewpager.setCurrentItem(currentPosition,true)
 
